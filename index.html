@@ -24,6 +24,10 @@
     --jade-tint:#dbe8e0;
     --on-accent:#fff8ec;
     --shadow: 0 1px 2px rgba(30,40,35,.06), 0 8px 24px -12px rgba(30,40,35,.18);
+    --qbg:#e9f1ea;
+    --qwater:#cfe2ee;
+    --qgreen:#cde4d2;
+    --qcard:#ffffff;
   }
   @media (prefers-color-scheme: dark){
     :root:not([data-theme="light"]){
@@ -41,6 +45,10 @@
       --jade:#7db4a1;
       --jade-tint:#16342c;
       --on-accent:#1a1004;
+      --qbg:#17283e;
+      --qwater:#1e3b56;
+      --qgreen:#1d3a33;
+      --qcard:#223a57;
       --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 28px -12px rgba(0,0,0,.55);
     }
   }
@@ -59,6 +67,10 @@
     --jade:#7db4a1;
     --jade-tint:#16342c;
     --on-accent:#1a1004;
+    --qbg:#17283e;
+    --qwater:#1e3b56;
+    --qgreen:#1d3a33;
+    --qcard:#223a57;
     --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 28px -12px rgba(0,0,0,.55);
   }
 
@@ -203,6 +215,7 @@
   .item .icon svg{ width:16px; height:16px; }
   .item .body{ min-width:0; }
   .item .act{ font-size:.96rem; }
+  .item .act s{ color:var(--ink-muted); opacity:.75; text-decoration-thickness:1.5px; }
   .item .note{ color:var(--ink-muted); font-size:.85rem; margin-top:3px; }
   .item .chips{ display:flex; flex-wrap:wrap; gap:6px; margin-top:7px; }
   .chip{
@@ -211,7 +224,10 @@
   }
   .chip svg{ width:13px; height:13px; flex-shrink:0; }
   .chip.price{ background:var(--accent-tint); color:var(--accent-strong); }
-  .chip.trans{ background:var(--surface-2); color:var(--ink-muted); font-family:"Noto Sans TC",sans-serif; }
+  .chip.trans{
+    background:var(--surface-2); color:var(--ink-muted); font-family:"Noto Sans TC",sans-serif;
+    white-space:normal; max-width:100%; text-align:left; line-height:1.5;
+  }
   @media (max-width:520px){
     .item{ grid-template-columns:20px 1fr; }
     .item .time{ grid-column:1/3; padding-top:0; }
@@ -262,6 +278,60 @@
   .totop.show{ opacity:1; pointer-events:auto; }
   .totop svg{ width:18px; height:18px; }
 
+  /* ---------- Daily route strip ---------- */
+  .droute{ background:var(--surface-2); border-radius:12px; padding:12px 14px 8px; margin-bottom:16px; }
+  .droute-head{ display:flex; align-items:center; gap:7px; margin-bottom:10px; flex-wrap:wrap; }
+  .droute-head svg{ width:15px; height:15px; color:var(--jade); flex-shrink:0; }
+  .droute-head b{ font-size:.85rem; color:var(--jade); }
+  .droute-head span{ font-size:.74rem; color:var(--ink-muted); }
+  .droute-strip{ display:flex; align-items:flex-start; overflow-x:auto; padding-bottom:8px; }
+  .rstop{ flex:0 0 auto; width:98px; text-align:center; }
+  .rdot{
+    width:22px; height:22px; border-radius:50%; background:var(--jade); color:#fff;
+    display:flex; align-items:center; justify-content:center; font-size:.68rem; margin:0 auto 7px;
+    font-family:"IBM Plex Mono",monospace; font-weight:600;
+  }
+  .rname{ display:block; font-size:.78rem; line-height:1.45; color:var(--ink); text-decoration:none; }
+  a.rname{ border-bottom:1px dotted var(--jade); }
+  a.rname:hover{ color:var(--jade); background:var(--jade-tint); }
+  .rtime{ display:block; font-size:.68rem; color:var(--ink-muted); margin-top:4px; }
+  .rleg{ flex:0 0 auto; width:66px; text-align:center; padding-top:10px; color:var(--ink-muted); font-size:.66rem; line-height:1.4; }
+  .rleg .rline{ height:2px; background:repeating-linear-gradient(90deg, var(--jade) 0 5px, transparent 5px 9px); margin-bottom:6px; }
+  .rleg svg{ width:13px; height:13px; display:block; margin:0 auto 2px; }
+
+  /* ---------- Q-style day map ---------- */
+  .qmap{ display:block; width:100%; max-width:560px; height:auto; border-radius:14px; margin:0 auto 12px; }
+  .qmap .qpath{ fill:none; stroke:var(--accent); stroke-width:2.4; stroke-dasharray:7 6; stroke-linecap:round; stroke-linejoin:round; opacity:.85; }
+  .qmap .qcard{ fill:var(--qcard); stroke:var(--jade); stroke-width:1.6; }
+  .qmap .qicon{ color:var(--jade); }
+  .qmap .qnum-bg{ fill:var(--accent); }
+  .qmap .qnum{ fill:var(--on-accent); font-family:"IBM Plex Mono",monospace; font-size:8px; font-weight:600; text-anchor:middle; }
+  .qmap .qlabel{ fill:var(--ink); font-family:"Noto Sans TC",sans-serif; font-size:9px; text-anchor:middle; }
+  .qmap .qwlabel{ fill:var(--jade); font-family:"Noto Serif TC",serif; font-size:11px; text-anchor:middle; opacity:.75; letter-spacing:1px; }
+  .qmap .qn{ fill:var(--ink-muted); font-family:"IBM Plex Mono",monospace; font-size:7.5px; text-anchor:middle; }
+  .qmap a{ cursor:pointer; }
+  .qmap .qhotel .qcard{ stroke:var(--accent); }
+  .qmap .qhotel .qicon{ color:var(--accent); }
+  .qmap .qhotel:hover .qcard{ fill:var(--accent); }
+  .qmap a:hover .qcard{ fill:var(--jade); }
+  .qmap a:hover .qicon{ color:var(--qcard); }
+  .qmap a:focus-visible .qcard{ stroke-width:3; }
+  .qsprite{ position:absolute; width:0; height:0; overflow:hidden; }
+
+  /* ---------- Map provider toggle ---------- */
+  .map-pref{
+    display:flex; align-items:center; gap:8px; flex-wrap:wrap;
+    background:var(--jade-tint); border-radius:12px; padding:11px 16px; margin-top:12px; font-size:.86rem;
+  }
+  .map-pref svg{ width:16px; height:16px; color:var(--jade); flex-shrink:0; }
+  .map-pref .mp-label{ color:var(--ink); margin-right:2px; }
+  .mp-btn{
+    font-family:"Noto Sans TC",sans-serif; font-size:.8rem; padding:4px 13px; border-radius:100px;
+    border:1px solid var(--jade); background:none; color:var(--jade); cursor:pointer; transition:.15s ease;
+  }
+  .mp-btn.active{ background:var(--jade); color:var(--surface); }
+  .mp-btn:focus-visible{ outline:2px solid var(--jade); outline-offset:2px; }
+
   /* ---------- Culture links ---------- */
   .culture-hint{
     display:flex; align-items:center; gap:9px; flex-wrap:wrap;
@@ -285,6 +355,19 @@
   }
   .cchip svg{ width:12px; height:12px; }
   .cchip:hover{ background:var(--plum-tint); }
+
+  /* ---------- Q 版預約提醒 ---------- */
+  .qremind{
+    display:inline-flex; align-items:center; justify-content:center; vertical-align:-5px;
+    width:23px; height:23px; border-radius:50%; border:0; padding:0; margin:0 2px 0 7px;
+    background:var(--accent); color:var(--on-accent); cursor:pointer; flex-shrink:0;
+    box-shadow:0 1px 3px rgba(0,0,0,.22); transition:transform .12s ease, background .15s ease;
+  }
+  .qremind svg{ width:13px; height:13px; }
+  .qremind:hover{ background:var(--accent-strong); transform:scale(1.12); }
+  .qremind:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
+  .remind-hint{ background:var(--accent-tint); }
+  .remind-hint .qremind{ margin-left:0; }
 
   /* ---------- Culture modal ---------- */
   .cmodal{ position:fixed; inset:0; z-index:60; display:none; }
@@ -341,6 +424,8 @@
     .clink{ border-bottom:none; color:var(--ink); }
     .cchip{ display:none; }
     #culture-appendix{ display:block; }
+    .droute-strip{ flex-wrap:wrap; overflow:visible; }
+    .droute{ break-inside:avoid; }
     body{ background:#fff; }
     section, .stage{ padding:22px 0; }
     .day, .hcard, .notes{ break-inside:avoid; page-break-inside:avoid; box-shadow:none; }
@@ -351,6 +436,33 @@
 
 </head>
 <body>
+<svg class="qsprite" aria-hidden="true" focusable="false"><defs>
+  <symbol id="ic-plane" viewBox="0 0 20 20"><path d="M11 2.6 12.6 4l-1 5.4 6.3 3.9-.3 1.6-6.5-1.9-1.3 5.5 2 1.6-.2 1.3-3-1-3 1-.2-1.3 2-1.6-1.3-5.5-6.5 1.9-.3-1.6 6.3-3.9-1-5.4z" fill="currentColor"/></symbol>
+  <symbol id="ic-train" viewBox="0 0 20 20"><rect x="4" y="3" width="12" height="11" rx="4" fill="currentColor"/><circle cx="7.5" cy="8.5" r="1.4" fill="var(--qcard)"/><circle cx="12.5" cy="8.5" r="1.4" fill="var(--qcard)"/><path d="M6 16l-2 3M14 16l2 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+  <symbol id="ic-hotel" viewBox="0 0 20 20"><path d="M3 9 10 3.5 17 9v8.5H3z" fill="currentColor"/><rect x="7.5" y="11" width="5" height="6.5" rx="1" fill="var(--qcard)"/></symbol>
+  <symbol id="ic-tower" viewBox="0 0 20 20"><path d="M10 2 15 6H5z" fill="currentColor"/><path d="M6 7h8l-1.2 3H7.2z" fill="currentColor"/><path d="M7 11h6l-1 3.5H8z" fill="currentColor"/><rect x="8.3" y="15" width="3.4" height="3.5" fill="currentColor"/></symbol>
+  <symbol id="ic-garden" viewBox="0 0 20 20"><circle cx="8" cy="7.5" r="4.5" fill="currentColor"/><rect x="7.2" y="11" width="1.6" height="6" rx=".8" fill="currentColor"/><path d="M12 17c0-2.6 2-4.2 4-4.2s3 1.6 3 4.2z" fill="currentColor" opacity=".55"/></symbol>
+  <symbol id="ic-bridge" viewBox="0 0 20 20"><path d="M2 15c3.5 0 4-7 8-7s4.5 7 8 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><path d="M2 18.4c1.6 0 1.6-1.4 3.2-1.4s1.6 1.4 3.2 1.4 1.6-1.4 3.2-1.4 1.6 1.4 3.2 1.4 1.6-1.4 3.2-1.4" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" opacity=".6"/></symbol>
+  <symbol id="ic-lantern" viewBox="0 0 20 20"><ellipse cx="10" cy="10.5" rx="5" ry="6" fill="currentColor"/><rect x="7" y="3.6" width="6" height="1.8" rx=".9" fill="currentColor"/><path d="M10 5.4v-1.8" stroke="currentColor" stroke-width="1.4"/><path d="M10 16.5v2.4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+  <symbol id="ic-firework" viewBox="0 0 20 20"><circle cx="10" cy="10" r="1.8" fill="currentColor"/><g stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M10 1.5v3.5M10 15v3.5M1.5 10h3.5M15 10h3.5M4 4l2.4 2.4M13.6 13.6 16 16M16 4l-2.4 2.4M6.4 13.6 4 16"/></g></symbol>
+  <symbol id="ic-circus" viewBox="0 0 20 20"><path d="M10 2.5 18 15H2z" fill="currentColor"/><path d="M10 2.5V15" stroke="var(--qcard)" stroke-width="1.6"/><path d="M6.5 15 10 7l3.5 8" fill="var(--qcard)" opacity=".4"/><rect x="2" y="15" width="16" height="3" rx="1.2" fill="currentColor"/></symbol>
+  <symbol id="ic-paw" viewBox="0 0 20 20"><circle cx="10" cy="13" r="4.4" fill="currentColor"/><circle cx="4.8" cy="8.6" r="2.2" fill="currentColor"/><circle cx="15.2" cy="8.6" r="2.2" fill="currentColor"/><circle cx="7.6" cy="4.4" r="2" fill="currentColor"/><circle cx="12.4" cy="4.4" r="2" fill="currentColor"/></symbol>
+  <symbol id="ic-snow" viewBox="0 0 20 20"><g stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M10 2v16M3 6l14 8M17 6 3 14"/><path d="M7.5 3.4 10 5l2.5-1.6M7.5 16.6 10 15l2.5 1.6"/></g></symbol>
+  <symbol id="ic-boat" viewBox="0 0 20 20"><path d="M2.5 13h15l-2.4 5h-10z" fill="currentColor"/><path d="M10 13V4M10 4l4.5 3.2L10 8.6" fill="currentColor"/></symbol>
+  <symbol id="ic-tea" viewBox="0 0 20 20"><path d="M4 7h10v5.5a5 5 0 0 1-10 0z" fill="currentColor"/><path d="M14 8.4h2.2a2.2 2.2 0 0 1 0 4.4H14" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M6.5 4.6c0-1 1-1.2 1-2.2M9.5 4.6c0-1 1-1.2 1-2.2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" fill="none"/><rect x="2.5" y="17" width="15" height="1.8" rx=".9" fill="currentColor"/></symbol>
+  <symbol id="ic-bun" viewBox="0 0 20 20"><path d="M3 12.5a7 7 0 0 1 14 0z" fill="currentColor"/><rect x="2" y="12.5" width="16" height="2.4" rx="1.2" fill="currentColor"/><rect x="4" y="15.4" width="12" height="2.6" rx="1.3" fill="currentColor" opacity=".55"/><path d="M8 4.6c0-1 1-1.2 1-2.2M11.5 4.6c0-1 1-1.2 1-2.2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" fill="none"/></symbol>
+  <symbol id="ic-glasses" viewBox="0 0 20 20"><circle cx="5.6" cy="11.2" r="3.7" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="14.4" cy="11.2" r="3.7" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M9.2 10.8c.5-.6 1.1-.6 1.6 0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M1.9 9.2 3.5 6.3M18.1 9.2 16.5 6.3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+  <symbol id="ic-shop" viewBox="0 0 20 20"><path d="M4 7h12l-1 11H5z" fill="currentColor"/><path d="M7.5 7.5V5.2a2.5 2.5 0 0 1 5 0v2.3" fill="none" stroke="currentColor" stroke-width="1.7"/></symbol>
+  <symbol id="ic-museum" viewBox="0 0 20 20"><rect x="2.5" y="4" width="15" height="12" rx="2" fill="currentColor"/><path d="M5.5 13 8.5 9l2.2 2.6L12.8 9 15 13z" fill="var(--qcard)"/><circle cx="13.6" cy="7.4" r="1.2" fill="var(--qcard)"/></symbol>
+  <symbol id="ic-tree" viewBox="0 0 20 20"><path d="M10 2 15 9H5z" fill="currentColor"/><path d="M10 7.5 16 16H4z" fill="currentColor"/><rect x="8.8" y="16" width="2.4" height="3" fill="currentColor"/></symbol>
+  <symbol id="ic-temple" viewBox="0 0 20 20"><path d="M2 7 10 2.5 18 7z" fill="currentColor"/><rect x="4" y="8" width="12" height="1.6" fill="currentColor"/><rect x="5" y="10.4" width="1.8" height="6" fill="currentColor"/><rect x="9.1" y="10.4" width="1.8" height="6" fill="currentColor"/><rect x="13.2" y="10.4" width="1.8" height="6" fill="currentColor"/><rect x="3" y="17" width="14" height="1.8" rx=".9" fill="currentColor"/></symbol>
+  <symbol id="ic-stage" viewBox="0 0 20 20"><path d="M2.5 3h15v3.5c-2.2 0-3 2-3 5.5h-9c0-3.5-.8-5.5-3-5.5z" fill="currentColor"/><path d="M8 3c0 4-1.2 7-1.2 9M12 3c0 4 1.2 7 1.2 9" stroke="var(--qcard)" stroke-width="1.2" fill="none"/><rect x="2" y="14" width="16" height="4" rx="1.4" fill="currentColor" opacity=".6"/></symbol>
+  <symbol id="ic-cloth" viewBox="0 0 20 20"><rect x="2.5" y="3" width="15" height="1.8" rx=".9" fill="currentColor"/><path d="M4.5 5h3.2v9.5c0 1-1.6 1-1.6 2.3 0 .9-1.6.9-1.6 0z" fill="currentColor"/><path d="M12.3 5h3.2v11.8c0 .9-1.6.9-1.6 0 0-1.3-1.6-1.3-1.6-2.3z" fill="currentColor" opacity=".6"/></symbol>
+  <symbol id="ic-bank" viewBox="0 0 20 20"><path d="M2 8 10 3l8 5z" fill="currentColor"/><rect x="4.2" y="9" width="2" height="7" fill="currentColor"/><rect x="9" y="9" width="2" height="7" fill="currentColor"/><rect x="13.8" y="9" width="2" height="7" fill="currentColor"/><rect x="2" y="16.4" width="16" height="2" rx="1" fill="currentColor"/><circle cx="10" cy="5.6" r="1" fill="var(--qcard)"/></symbol>
+  <symbol id="ic-egg" viewBox="0 0 20 20"><ellipse cx="10" cy="11" rx="6" ry="7.5" fill="currentColor"/><path d="M7.4 9.5c.8-2 2-3 3.6-3.4" stroke="var(--qcard)" stroke-width="1.5" fill="none" stroke-linecap="round"/><path d="M16.5 3.5 17.6 1M18.5 6h2.2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></symbol>
+  <symbol id="ic-house" viewBox="0 0 20 20"><path d="M2.5 9 10 3l7.5 6v9h-15z" fill="currentColor"/><rect x="8.2" y="12" width="3.6" height="6" fill="var(--qcard)"/><path d="M2.5 9h15" stroke="var(--qcard)" stroke-width="1.2"/></symbol>
+</defs></svg>
+
 <div class="hero" id="top">
   <svg class="hero-banner" viewBox="0 0 800 340" preserveAspectRatio="xMidYMax slice" role="img" aria-label="上海外灘聖誕夜景插畫">
     <defs>
@@ -453,6 +565,16 @@
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5V5a2 2 0 0 1 2-2h12v18H6a2 2 0 0 1-2-1.5z"/><path d="M8 7h7M8 11h7"/></svg>
       <span>景點名稱有<span class="demo">虛線底線</span>的，點一下會跳出它的歷史與文化故事。</span>
     </p>
+    <p class="culture-hint remind-hint">
+      <button class="qremind" data-c="bk_all" title="完整預約清單" aria-label="完整預約清單"></button>
+      <span>行程中出現這個鈴鐺的項目<b>需要事先預約</b>，點它看怎麼訂；也可以直接看<button class="clink" data-c="bk_all">完整預約清單</button>。</span>
+    </p>
+    <div class="map-pref">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 20l-5.5 2V6L9 4m0 16l6-2m-6 2V4m6 14l5.5 2V4L15 6m0 12V6m0 0L9 4"/></svg>
+      <span class="mp-label">每日動線要用哪個地圖開？</span>
+      <button class="mp-btn" data-prov="amap">高德地圖</button>
+      <button class="mp-btn" data-prov="baidu">百度地圖</button>
+    </div>
   </section>
 
   <div id="stages"></div>
@@ -469,8 +591,8 @@
   <section id="culture-appendix">
     <div class="section-head">
       <span class="kicker">Appendix</span>
-      <h2>景點人文筆記</h2>
-      <p class="desc">行程中各個景點的歷史與文化背景（網頁版可直接點景點名稱查看）。</p>
+      <h2>景點人文筆記與備忘</h2>
+      <p class="desc">行程中各個景點的歷史文化背景，以及行前備忘（網頁版可直接點名稱查看）。</p>
     </div>
     <div id="culture-appendix-list"></div>
   </section>
@@ -535,14 +657,363 @@ function iconOf(x){
   if(x.includes("地鐵")) return ICONS.metro;
   if(x.includes("網約車")||x.includes("打車")||x.includes("叫車")) return ICONS.car;
   if(x.includes("船")) return ICONS.boat;
-  if(x.includes("腳")) return ICONS.walk;
+  if(x.includes("腳") || x.includes("步行")) return ICONS.walk;
   return "";
+}
+const MAP_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 20l-5.5 2V6L9 4m0 16l6-2m-6 2V4m6 14l5.5 2V4L15 6m0 12V6m0 0L9 4"/></svg>';
+
+/* ---------------- Daily route (高德／百度地圖連結) ---------------- */
+const MAP_PROVIDERS = {
+  amap:  g => "https://www.amap.com/search?query=" + encodeURIComponent(g),
+  baidu: g => "https://api.map.baidu.com/geocoder?address=" + encodeURIComponent(g) + "&output=html&src=jiangnan-itinerary",
+};
+let mapProvider = "amap";
+try{
+  const saved = localStorage.getItem("mapProvider");
+  if(saved && MAP_PROVIDERS[saved]) mapProvider = saved;
+}catch(e){}
+
+function applyMapProvider(){
+  document.querySelectorAll("a[data-g]").forEach(a=>{
+    a.href = MAP_PROVIDERS[mapProvider](a.dataset.g);
+  });
+  document.querySelectorAll(".mp-btn").forEach(b=>{
+    b.classList.toggle("active", b.dataset.prov === mapProvider);
+  });
+}
+document.addEventListener("click", e=>{
+  const btn = e.target.closest(".mp-btn");
+  if(!btn) return;
+  mapProvider = btn.dataset.prov;
+  try{ localStorage.setItem("mapProvider", mapProvider); }catch(err){}
+  document.querySelectorAll(".remind-hint .qremind").forEach(b=>{ b.innerHTML = BELL_ICON; });
+applyMapProvider();
+});
+
+const ROUTES = {
+1:[{n:"桃園機場",g:"台湾桃园国际机场",t:"08:45"},
+   {n:"上海浦東機場",g:"上海浦东国际机场",t:"10:50",via:"飛機 CI501"},
+   {n:"麗呈璀際酒店",g:"上海丽呈璀际酒店",t:"12:00",via:"地鐵 2 號線"},
+   {n:"新天地聖誕市集",g:"上海新天地",t:"13:30",via:"地鐵 10 號線"},
+   {n:"造寸眼鏡",g:"上海造寸眼镜南京东路店",t:"17:00",via:"步行"},
+   {n:"洛克・外灘源",g:"上海外滩源",t:"19:30",via:"步行"},
+   {n:"回飯店",g:"上海丽呈璀际酒店",t:"22:00",via:"步行"}],
+2:[{n:"豫園・城隍廟",g:"上海豫园",t:"10:20",via:"地鐵 10 號線"},
+   {n:"眼鏡批發市場",g:"上海三叶眼镜市场",t:"13:30",via:"地鐵 10 轉 1 號線"},
+   {n:"外灘海關大樓",g:"上海海关大楼",t:"18:00",via:"網約車"},
+   {n:"洛克・外灘源",g:"上海外滩源",t:"19:00",via:"步行"},
+   {n:"五角場彩蛋廣場",g:"上海五角场下沉式广场",t:"21:00",via:"網約車 40 分"},
+   {n:"回飯店",g:"上海丽呈璀际酒店",t:"22:40",via:"網約車 40 分"}],
+3:[{n:"上海千古情景區",g:"上海千古情景区",t:"10:00",via:"網約車"},
+   {n:"回南京東路晚餐",g:"上海丽呈璀际酒店",t:"19:30",via:"網約車"}],
+4:[{n:"上海退房",g:"上海丽呈璀际酒店",t:"10:00"},
+   {n:"拙遇酒店・平江路",g:"苏州拙遇酒店",t:"11:45",via:"網約車 1.5–2 小時"},
+   {n:"拙政園",g:"苏州拙政园",t:"13:30",via:"網約車"},
+   {n:"觀前街・丹陽眼鏡",g:"苏州观前街",t:"16:45",via:"網約車 10 分"},
+   {n:"齐門・姑蘇夜遊船",g:"苏州齐门路",t:"18:00",via:"網約車"},
+   {n:"回飯店",g:"苏州拙遇酒店",t:"21:30",via:"網約車"}],
+5:[{n:"虎丘",g:"苏州虎丘",t:"11:00",via:"網約車"},
+   {n:"裕面堂（午餐）",g:"苏州裕面堂",t:"13:00",via:"網約車 10 分"},
+   {n:"南門商城・泰華",g:"苏州南门商城",t:"14:00",via:"網約車 15 分"},
+   {n:"石路步行街",g:"苏州石路步行街",t:"17:00",via:"網約車 10 分"},
+   {n:"七里山塘・松鶴樓",g:"苏州山塘街",t:"18:00",via:"步行"},
+   {n:"回飯店",g:"苏州拙遇酒店",t:"21:30",via:"網約車"}],
+6:[{n:"蘇州退房",g:"苏州拙遇酒店",t:"10:00"},
+   {n:"太湖龍之夢酒店",g:"湖州太湖龙之梦古镇大酒店",t:"11:40",via:"網約車 1.5 小時"},
+   {n:"冰雪世界",g:"太湖龙之梦冰雪世界",t:"14:00",via:"園區接駁"},
+   {n:"太湖古鎮・水舞秀",g:"湖州太湖古镇",t:"18:00",via:"園區接駁"},
+   {n:"回酒店",g:"湖州太湖龙之梦古镇大酒店",t:"21:00",via:"步行"}],
+7:[{n:"龍之夢動物世界",g:"太湖龙之梦动物世界",t:"10:15",via:"網約車"},
+   {n:"太湖古鎮（下午）",g:"湖州太湖古镇",t:"15:30",via:"園區接駁"},
+   {n:"龍之夢馬戲城",g:"太湖龙之梦马戏城",t:"18:00",via:"園區接駁"},
+   {n:"太湖古鎮（夜）",g:"湖州太湖古镇",t:"20:00",via:"步行"},
+   {n:"回酒店",g:"湖州太湖龙之梦古镇大酒店",t:"21:30",via:"步行"}],
+8:[{n:"太湖古鎮",g:"湖州太湖古镇",t:"11:00",via:"步行"},
+   {n:"回房午睡",g:"湖州太湖龙之梦古镇大酒店",t:"14:30",via:"步行"},
+   {n:"古鎮晚餐・夜秀",g:"湖州太湖古镇",t:"18:00",via:"步行"},
+   {n:"酒店觀景台卡位",g:"湖州太湖龙之梦古镇大酒店",t:"23:30",via:"步行"},
+   {n:"萬柱煙火",g:"湖州太湖古镇",t:"00:00"},
+   {n:"回房休息",t:"00:30",via:"步行"}],
+9:[{n:"龍之夢退房",g:"湖州太湖龙之梦古镇大酒店",t:"11:00"},
+   {n:"南潯古鎮北門",g:"南浔古镇",t:"11:50",via:"網約車 40–50 分"},
+   {n:"劉氏梯號・張石銘舊宅",g:"南浔刘氏梯号",t:"12:00",via:"步行"},
+   {n:"百間樓",g:"南浔百间楼",t:"下午",via:"步行"},
+   {n:"烏鎮西柵遊客中心",g:"乌镇西栅景区",t:"17:45",via:"網約車 45 分"},
+   {n:"望津里精品酒店",g:"乌镇望津里精品酒店",t:"21:15",via:"步行"}],
+10:[{n:"西柵水上茶市",g:"乌镇西栅水上集市",t:"05:30",via:"步行"},
+   {n:"草木本色染坊",g:"乌镇草木本色染坊",t:"13:30",via:"步行"},
+   {n:"木心美術館",g:"乌镇木心美术馆",t:"15:00",via:"步行"},
+   {n:"昭明弄堂・暖鍋",g:"乌镇昭明书院",t:"18:00",via:"步行"},
+   {n:"回民宿",g:"乌镇望津里精品酒店",t:"21:30",via:"步行"}],
+11:[{n:"烏鎮西柵退房",g:"乌镇望津里精品酒店",t:"10:00"},
+   {n:"木心美術館・老茶館",g:"乌镇木心美术馆",t:"11:00",via:"步行"},
+   {n:"桐鄉高鐵站",g:"桐乡站",t:"18:35",via:"網約車 35 分"},
+   {n:"上海虹橋站",g:"上海虹桥站",t:"19:48",via:"高鐵 G1304"},
+   {n:"橘子水晶・豫園站",g:"橘子水晶上海外滩豫园酒店",t:"20:45",via:"地鐵 10 號線"}],
+12:[{n:"海底撈大排檔",g:"海底捞大排档打浦路店",t:"11:00",via:"網約車"},
+   {n:"田子坊",g:"上海田子坊",t:"12:40",via:"步行 5 分"},
+   {n:"淮海中路",g:"上海淮海中路",t:"14:45",via:"地鐵／網約車"},
+   {n:"回到豫園",g:"上海豫园",t:"16:30",via:"網約車 15 分"},
+   {n:"豫園燈會・九曲橋",g:"上海豫园九曲桥",t:"17:30",via:"步行"},
+   {n:"回飯店",g:"橘子水晶上海外滩豫园酒店",t:"21:30",via:"步行"}],
+13:[{n:"飯店寄放行李",g:"橘子水晶上海外滩豫园酒店",t:"10:00"},
+   {n:"豫園城隍廟",g:"上海城隍庙",t:"10:30",via:"步行"},
+   {n:"上海老飯店",g:"上海老饭店福佑路",t:"12:00",via:"步行"},
+   {n:"第一食品商店",g:"上海第一食品商店南京东路",t:"13:45",via:"地鐵 10 號線 1 站"},
+   {n:"回飯店取行李",g:"橘子水晶上海外滩豫园酒店",t:"15:00",via:"地鐵"},
+   {n:"上海浦東機場",g:"上海浦东国际机场",t:"15:15",via:"網約車"},
+   {n:"桃園機場",g:"台湾桃园国际机场",t:"22:10",via:"飛機"}],
+};
+
+/* ---------------- Q 版每日小地圖 ---------------- */
+const DAYMAPS = {
+// 方位以「上北下南」安排，距離不成比例；h:1 = 住宿
+1:{w:"bottom",m:[{i:0,x:352,y:150,ic:"plane",l:"桃園機場"},{i:1,x:300,y:96,ic:"plane",l:"浦東機場"},
+   {i:2,x:168,y:84,ic:"hotel",l:"麗呈璀際",h:1},{i:3,x:118,y:138,ic:"tree",l:"新天地"},
+   {i:4,x:208,y:102,ic:"glasses",l:"造寸眼鏡"},{i:5,x:224,y:50,ic:"lantern",l:"外灘源"}]},
+2:{w:"bottom",m:[{i:0,x:146,y:140,ic:"temple",l:"豫園"},{i:1,x:112,y:56,ic:"glasses",l:"眼鏡市場"},
+   {i:2,x:242,y:98,ic:"bank",l:"外灘海關"},{i:3,x:258,y:50,ic:"lantern",l:"外灘源"},
+   {i:4,x:344,y:40,ic:"egg",l:"五角場"},{i:5,x:186,y:102,ic:"hotel",l:"麗呈璀際",h:1}]},
+3:{w:"bottom",m:[{i:0,x:186,y:150,ic:"stage",l:"千古情"},{i:1,x:206,y:72,ic:"hotel",l:"麗呈璀際",h:1}]},
+4:{w:"bottom",m:[{i:0,x:346,y:78,ic:"hotel",l:"上海退房",h:1},{i:1,x:214,y:116,ic:"hotel",l:"拙遇酒店",h:1},
+   {i:2,x:200,y:62,ic:"garden",l:"拙政園"},{i:3,x:166,y:134,ic:"shop",l:"觀前街"},
+   {i:4,x:264,y:46,ic:"boat",l:"夜遊船"}]},
+5:{w:"bottom",m:[{i:0,x:96,y:44,ic:"tower",l:"虎丘"},{i:1,x:196,y:42,ic:"bun",l:"裕面堂"},
+   {i:2,x:236,y:148,ic:"shop",l:"南門商城"},{i:3,x:96,y:118,ic:"shop",l:"石路"},
+   {i:4,x:150,y:84,ic:"bridge",l:"七里山塘"},{i:5,x:312,y:98,ic:"hotel",l:"拙遇酒店",h:1}]},
+6:{w:"top",m:[{i:0,x:336,y:60,ic:"hotel",l:"蘇州退房",h:1},{i:1,x:152,y:126,ic:"hotel",l:"龍之夢酒店",h:1},
+   {i:2,x:98,y:98,ic:"snow",l:"冰雪世界"},{i:3,x:206,y:148,ic:"lantern",l:"太湖古鎮"}]},
+7:{w:"top",m:[{i:0,x:104,y:100,ic:"paw",l:"動物世界"},{i:1,x:230,y:146,ic:"lantern",l:"太湖古鎮"},
+   {i:2,x:186,y:78,ic:"circus",l:"大馬戲"},{i:4,x:304,y:102,ic:"hotel",l:"龍之夢酒店",h:1}]},
+8:{w:"top",m:[{i:0,x:130,y:140,ic:"lantern",l:"太湖古鎮"},{i:1,x:234,y:110,ic:"hotel",l:"回房午睡",h:1},
+   {i:4,x:306,y:60,ic:"firework",l:"萬柱煙火"}]},
+9:{w:"bottom",m:[{i:0,x:44,y:90,ic:"hotel",l:"龍之夢",h:1},{i:1,x:140,y:112,ic:"temple",l:"南潯古鎮"},
+   {i:2,x:188,y:140,ic:"bank",l:"劉氏梯號"},{i:3,x:212,y:64,ic:"bridge",l:"百間樓"},
+   {i:4,x:298,y:96,ic:"boat",l:"烏鎮西柵"},{i:5,x:350,y:142,ic:"hotel",l:"望津里",h:1}]},
+10:{w:"band",m:[{i:0,x:78,y:106,ic:"tea",l:"水上茶市"},{i:1,x:156,y:68,ic:"cloth",l:"草木染坊"},
+   {i:2,x:240,y:110,ic:"museum",l:"木心館"},{i:3,x:330,y:68,ic:"bun",l:"昭明弄堂"},
+   {i:4,x:296,y:144,ic:"hotel",l:"望津里",h:1}]},
+11:{w:"bottom",m:[{i:0,x:48,y:112,ic:"hotel",l:"望津里退房",h:1},{i:1,x:106,y:68,ic:"museum",l:"木心館"},
+   {i:2,x:182,y:62,ic:"train",l:"桐鄉站"},{i:3,x:276,y:84,ic:"train",l:"上海虹橋"},
+   {i:4,x:350,y:122,ic:"hotel",l:"橘子水晶",h:1}]},
+12:{w:"bottom",m:[{i:0,x:72,y:126,ic:"bun",l:"海底撈"},{i:1,x:114,y:90,ic:"shop",l:"田子坊"},
+   {i:2,x:172,y:54,ic:"shop",l:"淮海中路"},{i:4,x:266,y:104,ic:"lantern",l:"豫園燈會"},
+   {i:5,x:334,y:68,ic:"hotel",l:"橘子水晶",h:1}]},
+13:{w:"bottom",m:[{i:0,x:92,y:114,ic:"hotel",l:"橘子水晶",h:1},{i:1,x:142,y:88,ic:"temple",l:"城隍廟"},
+   {i:2,x:100,y:50,ic:"bun",l:"上海老飯店"},{i:3,x:178,y:40,ic:"shop",l:"第一食品"},
+   {i:5,x:276,y:120,ic:"plane",l:"浦東機場"},{i:6,x:352,y:152,ic:"plane",l:"桃園機場"}]},
+};
+
+const QWATER = {
+  bottom:`<path d="M-10 150 Q 70 126 150 148 T 300 140 T 410 160 L 410 192 L -10 192 Z" fill="var(--qwater)" opacity=".8"/>
+    <ellipse cx="62" cy="34" rx="48" ry="22" fill="var(--qgreen)" opacity=".65"/>
+    <ellipse cx="322" cy="28" rx="54" ry="20" fill="var(--qgreen)" opacity=".45"/>`,
+  top:`<path d="M-10 -6 L410 -6 L410 44 Q 320 68 220 50 T 60 60 T -10 42 Z" fill="var(--qwater)" opacity=".85"/>
+    <text x="330" y="26" class="qwlabel">太　湖</text>
+    <ellipse cx="86" cy="170" rx="60" ry="20" fill="var(--qgreen)" opacity=".5"/>
+    <ellipse cx="322" cy="176" rx="56" ry="18" fill="var(--qgreen)" opacity=".4"/>`,
+  band:`<path d="M-10 112 Q 90 86 190 108 T 410 96 L 410 128 Q 300 144 190 130 T -10 144 Z" fill="var(--qwater)" opacity=".85"/>
+    <ellipse cx="86" cy="36" rx="56" ry="18" fill="var(--qgreen)" opacity=".55"/>
+    <ellipse cx="314" cy="172" rx="60" ry="18" fill="var(--qgreen)" opacity=".45"/>`,
+};
+
+function qmapHtml(day){
+  const d = DAYMAPS[day], r = ROUTES[day];
+  if(!d || !r) return "";
+  const m = d.m;
+  const pts = m.map(s=>`${s.x},${s.y}`).join(" ");
+  const markers = m.map(s=>{
+    const stop = r[s.i] || {};
+    const label = s.l || stop.n || "";
+    const inner =
+      `<rect class="qcard" x="${s.x-16}" y="${s.y-16}" width="32" height="32" rx="10"/>` +
+      `<use class="qicon" href="#ic-${s.ic}" x="${s.x-9.5}" y="${s.y-9.5}" width="19" height="19"/>` +
+      `<circle class="qnum-bg" cx="${s.x+14}" cy="${s.y-14}" r="7.5"/>` +
+      `<text class="qnum" x="${s.x+14}" y="${s.y-11}">${s.i+1}</text>` +
+      `<text class="qlabel" x="${s.x}" y="${s.y+29}">${label}</text>`;
+    const cls = s.h ? ' class="qhotel"' : "";
+    return stop.g
+      ? `<a${cls} data-g="${stop.g}" href="${MAP_PROVIDERS[mapProvider](stop.g)}" target="_blank" rel="noopener"><title>${label}</title>${inner}</a>`
+      : `<g${cls}>${inner}</g>`;
+  }).join("");
+  return `<svg class="qmap" viewBox="0 0 400 186" role="img" aria-label="第 ${day} 天路線示意圖，上方為北">
+    <rect width="400" height="186" rx="14" fill="var(--qbg)"/>
+    ${QWATER[d.w] || QWATER.bottom}
+    <polyline class="qpath" points="${pts}"/>
+    ${markers}
+    <g transform="translate(24,26)">
+      <circle r="11.5" fill="var(--qcard)" opacity=".8"/>
+      <path d="M0 -7.5 L3.4 2.4 L0 0.3 L-3.4 2.4 Z" fill="var(--plum)"/>
+      <text y="10" class="qn">N</text>
+    </g>
+  </svg>`;
+}
+
+function routeHtml(day){
+  const r = ROUTES[day];
+  if(!r) return "";
+  const parts = r.map((s,i)=>{
+    const leg = (i>0 && s.via)
+      ? `<div class="rleg"><div class="rline"></div>${iconOf(s.via)}<span>${s.via}</span></div>` : "";
+    const name = s.g
+      ? `<a class="rname" data-g="${s.g}" href="${MAP_PROVIDERS[mapProvider](s.g)}" target="_blank" rel="noopener">${s.n}</a>`
+      : `<span class="rname">${s.n}</span>`;
+    return leg + `<div class="rstop"><span class="rdot">${i+1}</span>${name}<span class="rtime mono">${s.t||""}</span></div>`;
+  }).join("");
+  return `<div class="droute">
+    <div class="droute-head">${MAP_ICON}<b>本日動線</b><span>點圖示或站名用地圖 App 開啟 ・ <b style="color:var(--accent)">橘色＝住宿</b> ・ 上方為北，方位大概、距離不成比例</span></div>
+    ${qmapHtml(day)}
+    <div class="droute-strip">${parts}</div>
+  </div>`;
 }
 const FOOD_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2v7a2 2 0 0 0 2 2v11M6 2v7M9 2v7M12 2v9a3 3 0 0 0 3 3v8M17 2c-2 0-3 3-3 7s1 4 3 4"/></svg>';
 const BED_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v6"/><path d="M3 18v2M21 18v2M3 12V7M8 12v-1a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v1"/></svg>';
 
 /* ---------------- Culture notes ---------------- */
 const CULTURE = {
+bk_all:{ n:"完整預約清單", m:"完整預約清單", e:"行前準備 ‧ 依急迫度排序", fh:"別忘了這些",
+ p:["<b>現在就訂（會搶光）</b><br>① 太湖龍之夢「煙火房」（12/31 跨年，最高優先）<br>② 四間飯店（龍之夢 3 晚、烏鎮 2 晚都是旺季）<br>③ 龍之夢國際大馬戲 跨年加演場（12/30）<br>④ 上海千古情門票（12/26）",
+    "<b>約 12/19 要盯</b><br>⑤ 高鐵 G1304（01/03 桐鄉 ➔ 上海虹橋）。中國高鐵約開車前 15 天開賣，而 01/03 是元旦連假最後一天，這張最難搶。",
+    "<b>出發前一至兩週</b><br>⑥ 拙政園實名分時段預約（12/27）<br>⑦ 平安夜餐廳訂位（12/24 李百蟹／上海灘／寶萊納）",
+    "<b>出發前一週</b><br>⑧ 烏鎮早茶客名額（請望津里代約）<br>⑨ 雙人夜間搖櫓船（480／艘）<br>⑩ 松鶴樓山塘店訂位，指定臨河座",
+    "<b>當天處理就好（這四項在行程上也各有自己的鈴鐺）</b><br>⑪ 很久以前羊肉串——下午用微信小程式線上取號<br>⑫ 海底撈大排檔——出門前用 App 取號<br>⑬ 齐門夜遊船——現場買票，早 30–40 分鐘到才卡得到第二排；<b>週一公休</b><br>⑭ 上海老飯店——中午通常有位，回程當天時間扣死，可先確認"],
+ f:["所有實名制購票與入住都要帶<b>台胞證</b>。",
+    "出發前先綁好支付寶或微信支付，並準備好網路漫遊或 eSIM。",
+    "跨年與元旦連假的訂位多半不能免費取消，訂之前先看退改規則。"]},
+bk_yangrou:{ n:"很久以前羊肉串 ‧ 線上取號", e:"當天下午 ‧ 微信小程式", fh:"怎麼做",
+ p:["五角場合生匯 B2 的全自動旋轉烤串店，氣氛極嗨、服務出了名媲美海底撈，是跨年檔期最熱門的宵夜場之一。<b>現場排隊常常兩小時起跳。</b>",
+    "做法是<b>當天下午就先用微信小程式線上取號</b>，等號碼快到了再過去。您 12/25 晚上 21:00 會到五角場看彩蛋燈光秀，羊肉串就在同一個商圈的合生匯 B2，看完秀直接去吃剛好——下午在眼鏡市場時先取號即可。",
+    "招牌：呼倫貝爾羔羊肉串（必吃）、烤生蠔、烤麵包片。人均 RMB110–140。"],
+ f:["微信搜尋店名就能找到取號入口，需要先綁手機號。","若當晚改成在外灘源慢慢逛，這家就留到別天，不要兩頭趕。"]},
+bk_haidilao:{ n:"海底撈大排檔 ‧ App 排隊", e:"當天出門前 ‧ 手機取號", fh:"怎麼做",
+ p:["打浦路店。比常規海底撈更市井、價格親民、出菜極快，是上海本地人也會去的大排檔型分店。",
+    "<b>出門前先用海底撈 App 或微信小程式線上取號</b>，系統會顯示前面還有幾桌。您 10:30 從豫園出門、11:00 抵達，建議 <b>10:00 左右在飯店就先取號</b>。",
+    "招牌：撈派滑牛肉、特色現炸酥肉、大排檔限定熱滷。人均 RMB80–110。"],
+ f:["線上取號通常要到店附近才開始叫號，太早取有機會過號，取完留意手機。","吃完走路五分鐘就是田子坊，不用叫車。"]},
+bk_yeyou:{ n:"齐門夜遊船 ‧ 現場買票要早到", e:"當天現場 ‧ 不能預約", fh:"怎麼做",
+ p:["姑蘇夜畫遊船是現場買票、<b>不開放預約</b>，所以時間要抓早。行程裡註明「第二排絕佳拍攝」——想坐到那個位置，建議<b>比發船時間早 30–40 分鐘到碼頭排隊</b>。",
+    "<b>⚠ 週一公休。</b>您排在 12/27 是週日沒問題；但如果行程整個往後挪一天就會撞上公休，要特別留意。",
+    "票價 300／2人（淡季 200／2人）。當天沒開或客滿的話，備案是盤門景區的遊船。"],
+ f:["第二排視野不被前排擋住，又不會被船頭燈光過曝，是拍夜景最好的位置。","冬天河上很冷，上船前加件厚外套、戴手套。"]},
+bk_laofan:{ n:"上海老飯店 ‧ 中午通常有位", e:"當天 ‧ 可不訂但建議確認", fh:"怎麼做",
+ p:["福佑路 242 號，1875 年創立的本幫菜老字號，就在豫園旁邊走路幾分鐘。<b>中午時段週轉快，臨時去通常有位</b>，所以不一定要訂。",
+    "但 01/05 是回程當天，12:00 吃完要接 13:45 的伴手禮採買、15:00 回飯店拿行李——<b>時間是扣死的</b>。保險起見可以前一晚用大眾點評先訂位，或當天上午先打電話問。",
+    "招牌：八寶鴨、紅燒肉、油爆蝦。人均 RMB120–200。"],
+ f:["同一區備案：綠波廊（國宴級、價位高）、寧波湯糰店（蟹粉小籠與湯糰，便宜快速）。","趕時間的話點兩菜一湯就好，本幫菜份量偏大。"]},
+bk_hotel:{ n:"煙火房 ‧ 最該先訂的一項", e:"現在就訂 ‧ 最高優先", fh:"怎麼做",
+ p:["12/31 跨年夜要靠房間陽台或觀景台卡位看萬柱煙火，<b>靠古鎮側的「煙火房」是整趟最關鍵的一項預訂</b>。行程原本寫的是入住當天跟櫃台加價升級，約 200／晚。",
+    "但跨年檔期這種房型極搶手，等 12/29 到現場才問很可能已經沒有。建議<b>現在就直接打電話或透過訂房平台跟飯店確認</b>：能不能提前鎖定、加價多少、要不要先付。",
+    "順便確認另外三間也都訂好了：麗呈璀際（12/24–12/26）、拙遇酒店（12/27–12/29）、烏鎮望津里（01/01–01/03）。元旦連假的烏鎮一樣會滿。"],
+ f:["講「靠古鎮側、看得到煙火的房型」比講房型名稱有用。","跨年房通常不能免費取消，訂之前先確認退改規則。"]},
+bk_circus:{ n:"大馬戲 ‧ 跨年加演場", e:"現在就訂", fh:"怎麼做",
+ p:["《龍之夢國際大馬戲》跨年檔期會加演，但座位有限（500／2人）。建議線上先購票選位，不要到現場碰運氣。",
+    "高空生死輪是壓軸，位置選正面中段，看得到整段高空動線。"],
+ f:["園區演出多半可在龍之夢官方小程序或大眾點評／攜程購票。","演出前 20–30 分鐘入場比較從容。"]},
+bk_qianguqing:{ n:"上海千古情 ‧ 票先買、位早換", e:"現在就訂", fh:"怎麼做",
+ p:["門票 700／2人要先線上買。但真正影響體驗的是<b>現場換票的時間</b>——座位是換票當下由系統分配的，越早換，中央黃金排（第 8–15 排）庫存越充足。",
+    "這就是行程把換票排在 10:40、距離 14:00 開演還有三小時多的原因。"],
+ f:["黃金中排與舞台平視，看得清演員表情又不會被水幕潑濕。","⚠ 出發前務必用高德確認景區實際位置與車程，再回頭調整出發時間。"]},
+bk_train:{ n:"高鐵 G1304 ‧ 最難搶的一張", e:"約 12/19 開賣", fh:"怎麼做",
+ p:["01/03 從烏鎮（桐鄉站）回上海虹橋。中國高鐵約在<b>開車前 15 天開賣</b>（以 12306 公告為準），所以大約 <b>12/19 前後</b>要準時搶。",
+    "01/03 是元旦連假最後一天，返程人潮最大，這張票最容易買不到。行程已備註「沒搶到就打車」，但桐鄉打車回上海市區會貴不少，也會塞。",
+    "購票要用台胞證實名登記，建議先在 12306 或攜程把證件資料建好，開賣當下才不會卡在填資料。"],
+ f:["車次與時刻每季調整，訂票前先確認 G1304 是否仍是這個時間。","買不到直達虹橋的，可找上海南站或松江南站的班次再轉地鐵。"]},
+bk_garden:{ n:"拙政園 ‧ 實名分時段預約", e:"出發前一至兩週", fh:"怎麼做",
+ p:["蘇州園林採<b>實名制分時段預約</b>，要在官方公眾號或小程序上訂，每個時段有人數上限，假日常常額滿。門票 200／2人，入園要核對台胞證。",
+    "虎丘（12/28）、南潯古鎮（01/01）、烏鎮西柵（01/01–01/03）也多半需要線上實名購票，但通常當天買得到；烏鎮若住景區內民宿，門票常由民宿代訂或含在住宿裡，入住前先問清楚。"],
+ f:["預約時段建議選 13:00–13:30 進園，對應行程的 13:30。","冬季閉園較早，留意最後入園時間。"]},
+bk_wuzhen:{ n:"烏鎮早茶客 ‧ 入住時就要約", e:"出發前一週", fh:"怎麼做",
+ p:["西柵水上茶市的「早茶客」體驗（01/02 清晨 05:30），<b>住景區官方酒店通常可免費預約名額</b>（內含面額券），但名額有限、要提前講。",
+    "行程在 01/01 辦入住那格寫的「預約早茶客」就是指這件事——辦入住第一件事就是問。更保險的是<b>出發前一週先用訂房平台或電話跟望津里確認</b>。"],
+ f:["若自費也很便宜，單點小吃一項約 RMB5–15。","清晨很冷，前一晚先把保暖衣物備好。"]},
+bk_boat:{ n:"雙人夜間搖櫓船", e:"出發前一週", fh:"怎麼做",
+ p:["480／艘，西柵夜遊的招牌體驗。行程在 01/02 本來就註明「訂到才有」——元旦連假的夜船很搶手，建議<b>請民宿前台代訂</b>，入住當天就講。",
+    "01/01 晚上那趟如果也訂得到更好，兩晚都搭並不衝突。"],
+ f:["夜船是包船制，兩人一艘，不是併船。","河上風大，上船前多加一件外套。"]},
+bk_xmas:{ n:"平安夜餐廳 ‧ 不訂會排到崩潰", e:"出發前一至兩週", fh:"怎麼做",
+ p:["12/24 是上海餐廳一年中最滿的一晚。新天地的上海灘餐廳、寶萊納，以及李百蟹，<b>不訂位幾乎一定要排很久</b>。",
+    "建議用大眾點評或攜程先訂位，順便看有沒有雙人套餐優惠券（李百蟹雙人團購套餐約 RMB258）。"],
+ f:["寶萊納平安夜通常有限定菜單與現場樂團，位子更難訂。","訂不到的話，外灘源市集的熱紅酒與現烤德式香腸是輕鬆的備案。"]},
+bk_songhelou:{ n:"松鶴樓（山塘店）訂位", e:"出發前一週", fh:"怎麼做",
+ p:["兩百多年歷史的蘇幫菜老店，加上山塘夜景時段，晚餐人最多。建議先訂位並指定<b>臨河座位</b>，吃飯時剛好看得到紅燈籠逐一亮起。",
+    "招牌松鼠桂魚需要現做，入座先點，不然等很久。"],
+ f:["訂不到的話，山塘街上的鑫震源蘇式生煎是輕鬆備案（人均 RMB30）。","松鶴樓觀前街本店也在 12/27 的動線上，可以分散。"]},
+yumiantang:{ n:"裕面堂 ‧ 蘇式湯麵", m:"裕面堂", e:"12/28 午餐 ‧ 網紅名店", fh:"小提醒",
+ p:["蘇州人的正餐是一碗麵。裕面堂是古城區評價最高的蘇式麵館之一，湯頭清而有味、麵條勁道，招牌是<b>蝦仁麵</b>與紅湯麵；評論裡最多人提的是「湯喝到最後一口都好」。",
+    "環境乾淨、有傳統燈籠裝飾，店家對外國客人友善，點餐不太會卡住。價位不算最便宜，但以品質來說很值得。",
+    "位置在古城西北，從虎丘下來約 10 分鐘車程，吃完再往南去南門商城剛好順路——這也補上了原本 12/28 沒有午餐時段的問題。"],
+ f:["蘇式麵講究「澆頭」另外點，湯麵本身是素的，蝦仁、爆魚、燜肉都是加點。",
+    "麵館多半中午生意最好，12:30 前後到比較不用等。",
+    "另一家口碑同級的是裕興記（西北街 11 號，近拙政園），三蝦麵與楓鎮大肉麵有名，如果 12/27 中午想換這家也可以。"]},
+tianzifang:{ n:"田子坊", m:"田子坊", e:"01/04 下午 ‧ 石庫門創意街區", fh:"小提醒",
+ p:["泰康路 210 弄，原本是 1930 年代的石庫門里弄與老廠房，1998 年起藝術家陸續進駐，改造成現在這片彎彎曲曲的創意街區——窄巷、紅磚、老虎窗之間塞滿了服飾店、手作小舖、咖啡館與設計小物。",
+    "跟新天地那種整齊的商業改造不同，田子坊保留了弄堂的雜亂與生活感，巷子窄到兩人要側身，但也因此特別好拍。衣服以設計小店與旗袍、文創 T 恤為主，價格落差大，要慢慢挑。",
+    "最大的優勢是<b>就在海底撈大排檔隔壁</b>（同屬打浦橋一帶），吃完走路五分鐘就到，完全不用移動。"],
+ f:["巷弄是立體迷宮，建議先走主巷再鑽支巷，不然很容易原地打轉。",
+    "這裡仍有居民居住，拍照時留意不要擋住住戶出入。",
+    "店家多半 10:00 開到 22:00，下午時段人最舒服。"]},
+huaihai:{ n:"淮海中路商圈", m:"淮海中路", e:"01/04 下午 ‧ 上海時尚大街", fh:"小提醒",
+ p:["淮海中路是上海最經典的時尚大街，從前的霞飛路，兩側梧桐成蔭。年輕品牌、快時尚與潮牌集中，沿街還有 K11、環貿 iapm 等購物中心，要逛街買衣服這裡選擇最整齊。",
+    "從田子坊過去約 10 分鐘，逛完往東回豫園約 15 分鐘，16:30 回到豫園完全來得及。",
+    "順道一提：<b>光明邨大酒家</b>（淮海中路 588 號）就在這條街上，它的<b>鮮肉月餅</b>是上海排隊王，評論裡不少人說是整趟上海吃到最好的東西，買一個邊走邊吃剛好。"],
+ f:["快時尚與潮牌多在路口的購物中心裡，沿街店面則偏中高價。",
+    "光明邨的鮮肉月餅現烤現賣，下午時段隊伍較短，一次限量出爐。",
+    "商場多半營業到 22:00，但您 16:30 要回豫園，抓兩小時剛好。"]},
+laofandian:{ n:"上海老飯店", m:"上海老飯店", e:"01/05 午餐 ‧ 本幫菜發源地", fh:"小提醒",
+ p:["福佑路 242 號，就在豫園旁邊，走路幾分鐘。創立於 1875 年，是上海本幫菜的發源老字號之一，招牌是八寶鴨、紅燒肉、油爆蝦這類濃油赤醬的經典本幫味。",
+    "店面氣派、服務快，10:00–22:00 營業，中午時段週轉快，臨時去通常有位。回程前的最後一餐在這裡吃，既有代表性又離飯店最近。",
+    "<b>同一區的備案</b>：綠波廊（豫園老街，國宴等級，價位較高）、寧波湯糰店（豫園老街 104 號，蟹粉小籠與湯糰，便宜快速）。"],
+ f:["本幫菜偏甜偏油，點菜時搭一道清炒時蔬會比較平衡。",
+    "豫園一帶餐廳價格普遍比市區高一截，這是觀光區的常態。",
+    "吃完走回飯店拿行李只要幾分鐘，不用抓車程。"]},
+shouxinli:{ n:"第一食品商店 ‧ 伴手禮", m:"第一食品商店", e:"01/05 下午 ‧ 一站買齊", fh:"實用提醒",
+ p:["南京東路 720 號，9:30–22:00。上海伴手禮的一站式賣場，整棟都是食品：蝴蝶酥、大白兔奶糖、梨膏糖、五香豆、各式糕點與茶葉都找得到，不必為了幾樣東西跑好幾個老字號。",
+    "從豫園站搭地鐵 10 號線<b>只要一站</b>到南京東路站，或走路約 15 分鐘，完全符合「不要離飯店太遠」。",
+    "<b>必買清單</b>：上海哈爾濱食品廠的蝴蝶酥（奶香濃郁、超酥脆）、沈大成的青糰與一品糕、大白兔奶糖、梨膏糖。這幾樣在第一食品都買得到。"],
+ f:["商品多半以「半斤／一斤」秤重計價，看清楚單位再點數量。",
+    "店內人多、櫃位獨立結帳，建議先逛一圈再回頭買，不然大包小包很難走。",
+    "蝴蝶酥等烘焙品怕壓，記得留空間放在行李箱上層。"]},
+szclothes:{ n:"南門商城 ‧ 泰華商城", m:"南門商城", e:"12/28 下午 ‧ 最便宜的一站", fh:"實用提醒",
+ p:["人民路 28 號，就在泰華商城旁邊。這一帶是蘇州在地學生買衣服的地方：小商品與服飾批發型賣場，價格是全蘇州最低的一檔，款式更新很快；缺點是要自己翻、也要殺價。",
+    "<b>泰華商城</b>（人民路 383 號，10:00–22:00）就在隔壁，樓層整齊、有冷氣，一樣走平價路線但比批發場好逛。兩個排在一起，三小時很夠。",
+    "從虎丘過來車程約 15–20 分鐘；逛完往西去石路、再接七里山塘也順，不會走回頭路。",
+    "<b>其他選擇</b>：美羅商城（觀前街 245 號）品牌較多、價位中上；圓融時代廣場（園區金雞湖東岸）有巨型天幕光電與優衣庫等平價品牌、夜景漂亮，但離古城車程約 30 分鐘，會跟當晚的山塘夜景衝突。"],
+ f:["批發型賣場要殺價，開價砍一半是常態；試衣間不一定好找，挑好尺寸再試比較省時。",
+    "12/28 是週一，人潮比假日少很多，店家也比較有耐心。",
+    "泰華商城樓上有餐廳，逛累了可以直接解決一餐。"]},
+shilu:{ n:"石路步行街", m:"石路步行街", e:"12/28 傍晚 ‧ 順路", fh:"小提醒",
+ p:["位在閶門、七里山塘的南端，走路幾分鐘就到山塘街入口——這是它最大的優勢：逛完直接接上晚上的夜景行程，完全不用移動。",
+    "攤販與正規店面混雜、衣服價格平實，是蘇州年輕人最常逛的老商圈；旁邊的<b>石路國際商城</b>是室內商場（10:00–21:30），天冷或下雨時的避難所。",
+    "石路老街區還有一整條餐飲街，如果不想吃松鶴樓，這裡選擇也多。"],
+ f:["街上店家多半 21:30 打烊，傍晚過去最從容。",
+    "逛完往北走就是山塘街，紅燈籠大約天黑後全亮，時間剛好銜接。"]},
+suzhoushop:{ n:"觀前街 ‧ 丹陽眼鏡 ‧ 石路", m:"觀前街", e:"12/27 傍晚 ‧ 逛街＋配眼鏡", fh:"小提醒",
+ p:["<b>觀前街</b>是蘇州最老的市中心商圈，以玄妙觀為中心的步行街，營業到 21:30。您行程裡那些老字號——黃天源糕團、采芝齋桂花糖與五香豆、松鶴樓——就散在這條街上，逛街和吃可以一次解決。",
+    "<b>丹陽眼鏡（粵海廣場 3F）</b>就在觀前街旁邊。丹陽是中國眼鏡產業的大本營，全國大部分鏡片都出自那裡，這幾家是它在蘇州的門市；干將東路上還有另一家分店。",
+    "<b>石路步行街</b>是另一個選擇，位在閶門、七里山塘的南端，走路幾分鐘就到。攤販與正規店面混雜、衣服價格更平實，是蘇州年輕人最常逛的商圈；旁邊的石路國際商城是室內商場（10:00–21:30），天冷或下雨可以躲。<b>如果想改在 12/28 逛，把山塘街提前到 16:30 就完全順路。</b>",
+    "<b>誠品生活蘇州</b>在金雞湖邊，是誠品在大陸的第一家店，設計感商店多；但位在園區、離古城車程約 30 分鐘，要單獨排半天才划算，跟這兩天的動線都不順。"],
+ f:["配眼鏡還是建議以上海為主：蘇州這幾家是品牌門市，款式與價格的選擇都不如上海火車站的批發市場。蘇州專心買衣服就好。",
+    "觀前街與石路的商場多半 21:30 打烊，傍晚時段最從容。",
+    "12/27 是週日，市中心人潮會比平日多一些。"]},
+glasses2:{ n:"造寸眼鏡 ‧ 南京東路店", m:"造寸眼鏡", e:"12/24 傍晚 ‧ 飯店走路就到", fh:"小提醒",
+ p:["置地廣場 11 樓（南京東路 409–459 號），就在南京東路步行街上，從麗呈璀際酒店走過去幾分鐘——落地當天最省力的選擇，行李放好、逛完新天地回來剛好順路。",
+    "和火車站那幾個批發市場不同，這裡是<b>正規店面、明碼標價</b>，不用殺價、也不會看人開價；代價是價格比批發市場高一截。想省事、不想花半天泡市場的話很適合。",
+    "落地第一天來還有一個好處：萬一鏡片要等（漸進多焦點或特殊鍍膜通常要幾天），後面還有十幾天可以回來拿——01/03 到 01/05 您又會住回上海豫園一帶，取件時間綽綽有餘。"],
+ f:["帶舊眼鏡或最近的驗光單，度數有依據才配得準。",
+    "百貨樓層一般營業到 21:00–22:00，比批發市場晚打烊，傍晚過去沒問題。",
+    "想比價的話，12/25 下午還安排了火車站的眼鏡批發市場，可以先看後買。"]},
+glasses:{ n:"眼鏡批發市場 ‧ 配眼鏡備忘錄", m:"眼鏡批發市場", e:"12/25 下午 ‧ 取代開市客", fh:"實用提醒",
+ p:["上海配眼鏡的主戰場是幾個<b>眼鏡批發市場</b>：幾十家攤位集中在同一層樓，現場免費驗光、當天取件，價格比台灣低不少。一般單光鏡片大約 15 到 60 分鐘就能拿；漸進多焦點或特殊鍍膜要等，通常一週。蔡司、依視路等進口鏡片都有，也有便宜的國產鏡片可挑。",
+    "<b>首選 ‧ 上海火車站一帶</b><br>三葉眼鏡市場（梅園路 360 號，眼鏡集中在 4 樓整層）是規模最大的一處；同一帶還有上海國際眼鏡城與凱泰眼鏡批發市場，走路可互通。攤位多、好比價，不少攤主會講英文。從南京東路站搭地鐵 10 號線轉 1 號線到上海火車站，約十幾分鐘。",
+    "<b>順路備案 ‧ 五角場三葉眼鏡城</b><br>在凱迪金融大廈 3 樓，就在當晚要去的彩蛋廣場旁邊。這一帶是復旦、同濟的大學城商圈，客群最年輕、款式也最跟得上流行。",
+    "<b>不想殺價 ‧ 造寸眼鏡</b><br>南京東路置地廣場 11 樓，從飯店走路就到，正規店面、明碼標價，但價格會高一截。",
+    "<b>時間要注意</b><br>眼鏡城多半 20:00 前後打烊，原訂 21:00 才到五角場會來不及配。建議把火車站三葉排在下午（也就是原本開市客的時段），或把五角場提前到 18:30–19:00，先配眼鏡再看燈光秀。"],
+ f:["一定要帶舊眼鏡或最近的驗光單，度數有依據才配得準。",
+    "批發市場開價是給你殺的，對外地客尤其會先報高價；對折起跳慢慢談很正常，覺得不對勁就換一攤，攤位多得是。",
+    "12/25 是週五，人潮比週末少很多，驗光也比較仔細。",
+    "漸進多焦點與特殊鍍膜要預留約一週，若趕回程請改選一般鏡片。",
+    "地鐵車資為估算（上海地鐵起步 3 元），實際以現場為準。"]},
+
 xintiandi:{ n:"新天地・石庫門", m:"新天地", e:"1860s 起 ‧ 石庫門里弄",
  p:["上海開埠後人口湧入，本地營造商把江南傳統三合院的格局壓縮進西式聯排住宅，門框用石條箍成，配一對厚重黑漆木門與銅環——這就是「石庫門」。一道門內往往住著好幾戶人家，亭子間、曬台、弄堂口的叫賣聲，構成了近代上海最典型的市井生活。",
     "一九九○年代末，太平橋一帶的舊式里弄被整體改造：外牆的清水青磚、石門框與老虎窗按原樣保留，內部換成餐廳、酒吧與店鋪，成為今天的新天地。它的爭議與成功同樣有名——有人說它把弄堂變成了舞台，也有人說它讓石庫門免於被拆光。",
@@ -680,6 +1151,7 @@ denghui:{ n:"豫園燈會", m:"豫園元旦燈會", e:"1995 年起 ‧ 國家級
  f:["九曲橋上人潮極多，亮燈前半小時先卡位會輕鬆很多。","燈組多為手工紮製，骨架、裱糊、繪製都有專門的匠人。"]},
 };
 
+const BELL_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8.5a6 6 0 0 0-12 0c0 6-2.5 7.5-2.5 7.5h17S18 14.5 18 8.5z"/><path d="M13.7 20a2 2 0 0 1-3.4 0"/></svg>';
 const BOOK_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5V5a2 2 0 0 1 2-2h12v18H6a2 2 0 0 1-2-1.5z"/><path d="M8 7h7"/></svg>';
 
 function cultureWrap(text, keys, used){
@@ -711,7 +1183,8 @@ const DAYS = [
   {t:"10:50", a:"抵達上海浦東（PVG）", x:"飛機", p:"機票 台20000／1人"},
   {t:"12:00", a:"出關，地鐵 2 號線至「南京東路站」2 號口出站，隔壁即悅薈廣場", x:"地鐵 2 號線"},
   {t:"13:10", a:"飯店寄存行李", h:"麗呈璀際酒店", p:"兩晚 1700／2人"},
-  {t:"13:30–16:30", a:"新天地聖誕市集／李百蟹（九江路・外灘南京路店）", c:["xintiandi"], x:"地鐵 10 號線（往基隆路／航中路方向）"},
+  {t:"13:30–16:30", a:"新天地聖誕市集／李百蟹（九江路・外灘南京路店）", c:["xintiandi"], bk:"bk_xmas", x:"地鐵 10 號線（往基隆路／航中路方向）"},
+  {t:"17:00–18:30", a:"造寸眼鏡（南京東路・置地廣場 11 樓）配眼鏡", c:["glasses2"], x:"腳", note:"飯店走路就到；正規店面、明碼標價，不用殺價"},
   {t:"19:30–21:30", a:"洛克・外灘源平安夜狂歡／圓明園路步行街", c:["waitanyuan"], x:"腳", p:"門票 80／2人"},
   {t:"22:00", a:"散步返回飯店休息", h:"麗呈璀際酒店", p:"平均一晚 850／2人"},
  ],
@@ -724,45 +1197,44 @@ const DAYS = [
  hotel:"麗呈璀際酒店",
  items:[
   {t:"10:20–13:00", a:"搭車至豫園／城隍廟（也可在房休息）", c:["yuyuan","chenghuangmiao"], x:"地鐵 10 號線，坐 1 站在「豫園站」下車（1 號口或 3 號口出站）", note:"前後可調動", p:"10／2人"},
-  {t:"13:30–17:00", a:"開市客 Costco（上海浦東店）", x:"網約車", p:"60／2人"},
+  {t:"13:30–17:00", a:"<s>開市客 Costco（上海浦東店）</s> ➔ 增加：眼鏡批發市場", c:["glasses"], x:"地鐵 10 轉 1 號線", p:"地鐵約 10／2人", note:"原訂開市客改為配眼鏡；點「眼鏡批發市場」看完整備忘錄"},
   {t:"18:00", a:"外灘海關亮燈", c:["bund"], x:"網約車", p:"60／2人", note:"一秒內同步亮起金黃色華燈"},
-  {t:"19:30–21:30", a:"洛克・外灘源／圓明園路步行街，或靈活調動改去「很久以前」羊肉串", c:["waitanyuan"], x:"網約車", p:"60／2人", note:"太累可不走去；百年歐式建築街區掛滿瀑布般星星燈網，人工雪花機每逢整點飄雪，搭配巨型聖誕樹與復古旋轉木馬"},
-  {t:"21:00", a:"五角場下沉式廣場，欣賞巨型彩蛋 3D 燈光秀", c:["wujiaochang"], x:"網約車", p:"60／2人"},
-  {t:"22:00", a:"散步返回飯店休息", h:"麗呈璀際酒店", p:"平均一晚 850／2人"},
+  {t:"19:00–20:30", a:"洛克・外灘源／圓明園路步行街，或靈活調動改去「很久以前」羊肉串", c:["waitanyuan"], bk:"bk_yangrou", x:"腳", p:"60／2人", note:"原為 19:30–21:30，提早收尾才趕得上五角場（原表這兩段時間重疊）"},
+  {t:"21:00–22:00", a:"五角場下沉式廣場，欣賞巨型彩蛋 3D 燈光秀", c:["wujiaochang"], x:"網約車 40 分", p:"60／2人"},
+  {t:"22:40", a:"回飯店休息", x:"網約車 40 分", h:"麗呈璀際酒店", p:"平均一晚 850／2人"},
  ],
  food:[
   {n:"南翔饅頭店（豫園）", c:["nanxiang"], d:"南翔小籠包創始店，百年老字號，建議直上二、三樓內用環境更好。招牌：蟹粉鮮肉小籠包（必點）、巨型蟹黃灌湯包（用吸管吸湯汁）。", p:"人均 RMB60–100"},
-  {n:"開市客 Costco 熟食區", d:"必吃黑松露牛肉捲（外部熟食區現點現切，肉質多汁）；也可帶走大顆粒蟹黃拌麵等聯名冷凍食品。"},
   {n:"很久以前羊肉串（五角場合生匯 B2）", d:"全自動旋轉烤串店，氣氛熱鬧、服務媲美海底撈。招牌：呼倫貝爾羔羊肉串（必吃）、烤生蠔、烤麵包片。下午先用微信小程式線上取號，免得現場排隊兩小時。", p:"人均 RMB110–140"},
  ]},
-{day:3, date:"12/26", wd:"六", stage:"sh1", tagline:"上海｜千古情震撼大秀 ➔ 五角場彩蛋夜景",
+
+{day:3, date:"12/26", wd:"六", stage:"sh1", tagline:"上海｜千古情震撼大秀（晚上回市區休息）",
  hotel:"麗呈璀際酒店",
  items:[
-  {t:"10:00", a:"飯店出門，網約車直達上海千古情景區", x:"南京東路站搭地鐵 10 號線轉 8 號線 ／ 網約車", h:"麗呈璀際酒店", p:"60／2人"},
-  {t:"10:40", a:"人工售票處或自助機完成換票取証", p:"門票 700／2人", note:"越早進園，中央黃金排數越充足，越容易被派到神仙座位"},
+  {t:"10:00", a:"飯店出門，網約車直達上海千古情景區", c:["qianguqing"], x:"網約車", h:"麗呈璀際酒店", p:"60／2人", note:"⚠ 出發前務必用高德確認景區地址與實際車程，可能遠比 40 分鐘久"},
+  {t:"10:40", a:"人工售票處或自助機完成換票取証", bk:"bk_qianguqing", p:"門票 700／2人", note:"越早進園，中央黃金排數越充足，越容易被派到神仙座位"},
   {t:"10:50–13:30", a:"園區小吃：排骨年糕、生煎包", p:"一份 30"},
   {t:"13:40", a:"提早 20 分鐘進場：主秀 14:00 準時開演"},
-  {t:"14:00–15:00", a:"核心表演：觀看《上海千古情》主秀", c:["qianguqing"], note:"黃金中排（第 8–15 排）：與舞台平視、看得清演員表情又不會被水幕潑濕，完美收錄全景 3D 燈光特效"},
+  {t:"14:00–15:00", a:"核心表演：觀看《上海千古情》主秀", note:"黃金中排（第 8–15 排）：與舞台平視、看得清演員表情又不會被水幕潑濕，完美收錄全景 3D 燈光特效"},
   {t:"15:30–17:30", a:"體驗《大地震》沉浸式劇場"},
   {t:"17:30–18:00", a:"玩「戰上海」"},
-  {t:"18:00–18:45", a:"搭網約車直奔五角場商圈（50 分鐘）", c:["wujiaochang"], x:"網約車", p:"100／2人"},
-  {t:"18:45–20:30", a:"逛合生匯 B2 小吃街：胖阿姨鍋貼、阿嬤手作奶茶", p:"200／2人"},
-  {t:"20:30–22:15", a:"21:50 巨型彩蛋 3D 燈光秀（下沉式廣場）", note:"徐家匯書院和天主教堂廣場佈滿美式復古聖誕樹與市集"},
-  {t:"22:15–22:45", a:"五角場站搭地鐵 10 號線，直達「南京東路站」回飯店", x:"地鐵 10 號線", h:"麗呈璀際酒店", p:"60／2人"},
+  {t:"18:00–19:30", a:"<s>五角場商圈</s>・<s>合生匯 B2 小吃街</s>・<s>21:50 巨型彩蛋 3D 燈光秀</s> ➔ 取消，直接回市區", x:"網約車", note:"彩蛋燈光秀 12/25 已看過；省下橫跨上海南北的來回車程與約 300 元車資"},
+  {t:"19:30–21:00", a:"南京東路／外灘附近晚餐，早點休息（隔天要移動到蘇州）", x:"腳"},
+  {t:"21:30", a:"回飯店", h:"麗呈璀際酒店", p:"平均一晚 850／2人"},
  ],
  food:[
   {n:"千古情園區小吃攤", d:"必吃排骨年糕（上海經典，年糕炸過外脆內軟）、生煎包。", p:"人均 RMB30–50"},
-  {n:"阿嬤手作 ＆ 胖阿姨鍋貼（五角場合生匯）", d:"阿嬤手作奶茶是排隊王，必點「打米麻薯」或「老店米乳茶」；胖阿姨鍋貼主打大顆草頭鍋貼、鮮肉鍋貼。", p:"奶茶 RMB28／杯，小吃人均 RMB30"},
+  {n:"南京東路晚餐備案", d:"回市區後可在南京東路一帶解決晚餐；泰康食品、老大房、沈大成都在這一帶，也可順便先看看伴手禮。"},
  ]},
 
-{day:4, date:"12/27", wd:"日", stage:"sz", tagline:"上海 ➔ 蘇州｜極速高鐵 25 分鐘",
+{day:4, date:"12/27", wd:"日", stage:"sz", tagline:"上海 ➔ 蘇州｜網約車直達，不趕高鐵",
  hotel:"拙遇酒店",
  items:[
-  {t:"10:00", a:"退房，打車 15 分鐘前往上海高鐵站", x:"網約車"},
-  {t:"10:30–10:55", a:"搭乘高鐵，上海站 ➔ 蘇州站（車程僅 25 分鐘，若沒買到票則改打車）", x:"高鐵 ／ 網約車"},
-  {t:"11:15", a:"抵達蘇州，行李寄放飯店，中午在平江路歷史街區用餐", c:["pingjianglu"], h:"拙遇酒店", p:"900／2晚／2人", note:"啞巴生煎"},
-  {t:"13:30–16:30", a:"拙政園，欣賞正宗蘇州園林疊石", c:["zhuozhengyuan"], x:"網約車", p:"門票 200／2人"},
-  {t:"18:00–21:00", a:"齐門馬頭姑蘇夜畫遊船（現場買票，第二排絕佳拍攝點，週一公休，沒有的話改去盤門）", x:"網約車", p:"門票 300／2人（淡季 200／2人）"},
+  {t:"10:00–11:45", a:"退房，<s>搭高鐵（上海站 ➔ 蘇州站）</s> ➔ 改網約車直達蘇州（約 100 公里）", x:"網約車 1.5–2 小時", p:"約 500／車", note:"免去趕高鐵、行李上下車與進站安檢，出發時間也變彈性"},
+  {t:"11:45", a:"抵達蘇州，行李寄放飯店，中午在平江路歷史街區用餐", c:["pingjianglu"], h:"拙遇酒店", p:"900／2晚／2人", note:"啞巴生煎"},
+  {t:"13:30–16:30", a:"拙政園，欣賞正宗蘇州園林疊石", c:["zhuozhengyuan"], bk:"bk_garden", x:"網約車", p:"門票 200／2人"},
+  {t:"16:45–17:45", a:"觀前街逛街＋丹陽眼鏡（粵海廣場 3F）配眼鏡", c:["suzhoushop"], x:"網約車 10 分", note:"拙政園過去約 10 分鐘；逛完再往北去齐門搭船也近"},
+  {t:"18:00–21:00", a:"齐門馬頭姑蘇夜畫遊船（現場買票，第二排絕佳拍攝點，週一公休，沒有的話改去盤門）", bk:"bk_yeyou", x:"網約車", p:"門票 300／2人（淡季 200／2人）"},
   {t:"21:30", a:"返回平江路附近飯店休息", h:"拙遇酒店", p:"平均一晚 450／2人"},
  ],
  food:[
@@ -770,18 +1242,21 @@ const DAYS = [
   {n:"梅月軒梅花糕 ＋ 蘇式綠豆湯", d:"梅花糕外型像梅花、口感軟糯豆沙餡微甜不膩；綠豆湯加薄荷水、糯米、蜜棗、青紅絲，跟台灣做法截然不同、很解膩。", p:"梅花糕 RMB8／個，綠豆湯 RMB10／杯"},
   {n:"平江路街頭小吃", d:"拙林里糖粥、茉香枕河冰淇淋、東吳蘇錦記綠豆湯，以及山海焗蘇州家常菜、煙火砂鍋煲。"},
  ]},
-{day:5, date:"12/28", wd:"一", stage:"sz", tagline:"蘇州 ➔ 夢幻七里山塘夜",
+
+{day:5, date:"12/28", wd:"一", stage:"sz", tagline:"蘇州 ➔ 平價逛街日 ＋ 夢幻七里山塘夜",
  hotel:"拙遇酒店",
  items:[
   {t:"10:30", a:"出門", h:"拙遇酒店"},
-  {t:"11:00–14:00", a:"虎丘", c:["huqiu"], x:"網約車", note:"回程可順遊平江路"},
-  {t:"14:30–17:00", a:"留園", c:["liuyuan"], x:"網約車", p:"門票 100／2人", note:"鄰近觀前街"},
-  {t:"17:30–21:00", a:"高光時刻：七里山塘夜景 —— 紅燈籠沿小橋流水逐一亮起，穿梭槳聲燈影中；晚餐在老街享用松鶴樓的松鼠桂魚", c:["shantang","songhelou"], x:"網約車"},
+  {t:"11:00–13:00", a:"虎丘", c:["huqiu"], x:"網約車", note:"縮短為兩小時，把下午留給逛街"},
+  {t:"13:00–14:00", a:"午餐：裕面堂（蘇式湯麵・網紅名店）", c:["yumiantang"], x:"網約車 10 分", note:"補上原本沒有的午餐時段；蝦仁麵是招牌"},
+  {t:"14:00–16:30", a:"<s>留園</s> ➔ 改成逛街：南門商城・泰華商城（平價服飾）", c:["szclothes","liuyuan"], x:"網約車 15 分", note:"蘇州在地學生買衣服的地方，價格最低、要殺價；原留園門票 100／2人省下"},
+  {t:"17:00–18:00", a:"石路步行街（在山塘街南端，順路）", c:["shilu"], x:"網約車 10 分"},
+  {t:"18:00–21:00", a:"高光時刻：七里山塘夜景 —— 紅燈籠沿小橋流水逐一亮起，穿梭槳聲燈影中；晚餐在老街享用松鶴樓的松鼠桂魚", c:["shantang","songhelou"], bk:"bk_songhelou", x:"步行"},
   {t:"21:30", a:"打車返回平江路飯店", x:"網約車", h:"拙遇酒店", p:"平均一晚 450／2人"},
  ],
  food:[
+  {n:"裕面堂（蘇式湯麵）", c:["yumiantang"], d:"古城區評價最高的蘇式麵館之一，湯頭清而有味、麵條勁道。招牌蝦仁麵、紅湯麵；澆頭另點。", p:"人均 RMB35–60"},
   {n:"松鶴樓（山塘店）", c:["songhelou"], d:"超過兩百年歷史的蘇幫菜鼻祖，臨河看燈籠吃飯極具江南詩意。招牌：松鼠桂魚（必點，外脆裡嫩、酸甜開胃）、清炒河蝦仁、響油鱔糊。", p:"人均 RMB150–220"},
-  {n:"鑫震源・蘇式生煎（山塘街小吃備案）", d:"招牌大蝦生煎（內有一整隻大蝦）、紙皮燒賣。", p:"人均 RMB30"},
   {n:"山塘街 ／ 觀前街小吃地圖", d:"桂花糖芋艿、糖藕、現烤梅花糕、烤乳扇捲餅、買買提羊肉串；觀前街則有玄妙觀老字號糕點、黃天源蘇式糕團、采芝齋桂花糖與五香豆、大富貴餛飩，以及晚園蘇式火鍋等網紅店。"},
  ]},
 
@@ -789,7 +1264,7 @@ const DAYS = [
  hotel:"太湖龍之夢古鎮大酒店",
  items:[
   {t:"10:00", a:"蘇州退房，網約車直跨湖州（距離 75 公里，高速僅需 1.5 小時）", c:["huzhou"], x:"網約車", p:"350／2人"},
-  {t:"11:40", a:"抵達太湖古鎮大酒店辦理入住", h:"太湖龍之夢古鎮大酒店", p:"3000／3晚／2人", note:"記得跟櫃台加價換「煙火房」，12/31 那晚加價約 200／1晚"},
+  {t:"11:40", a:"抵達太湖古鎮大酒店辦理入住", bk:"bk_hotel", h:"太湖龍之夢古鎮大酒店", p:"3000／3晚／2人", note:"記得跟櫃台加價換「煙火房」，12/31 那晚加價約 200／1晚"},
   {t:"14:00–17:00", a:"冰雪世界：室內滑雪、玩冰雕、冰上碰碰車", x:"網約車", p:"滑雪 400／2人"},
   {t:"18:00", a:"太湖古鎮享用丁蓮芳千張包子、周生記餛飩", c:["longzhimeng"], x:"網約車"},
   {t:"19:30–20:30", a:"大型水上燈光水舞秀與打鐵花"},
@@ -799,18 +1274,22 @@ const DAYS = [
   {n:"丁蓮芳 ＆ 周生記", d:"湖州流傳百年的兩大巨頭小吃。招牌：丁蓮芳千張包子（豆腐皮包純肉餡，配粗粉絲湯）、周生記餛飩（皮薄餡大）與招牌紅燒雞爪。", p:"人均 RMB30–45"},
   {n:"太湖漁家（湖鮮餐廳）", d:"招牌太湖三白（白魚、白蝦、銀魚）、清蒸太湖大白魚（極鮮美）、銀魚炒蛋。", p:"人均 RMB100–150"},
  ]},
-{day:7, date:"12/30", wd:"三", stage:"hz", tagline:"湖州｜大馬戲震撼之夜與野生動物王國",
+{day:7, date:"12/30", wd:"三", stage:"hz", tagline:"湖州｜動物王國、古鎮漫遊與大馬戲之夜",
  hotel:"太湖龍之夢古鎮大酒店",
  items:[
   {t:"10:15–15:00", a:"龍之夢動物世界：搭小火車穿越野生車行區，近距離餵食草食動物", x:"網約車", p:"門票 450／2人"},
-  {t:"18:00–19:30", a:"核心大秀：《龍之夢國際大馬戲》（跨年加演場，高空生死輪極其震撼）", p:"門票 500／2人"},
-  {t:"20:00", a:"太湖古鎮", x:"網約車"},
+  {t:"15:30–17:30", a:"太湖古鎮：NPC 互動、看街頭表演、逛街", c:["longzhimeng"], x:"園區接駁", note:"從 12/31 移過來的，讓跨年當天下午可以回房補眠"},
+  {t:"18:00–19:30", a:"核心大秀：《龍之夢國際大馬戲》（跨年加演場，高空生死輪極其震撼）", bk:"bk_circus", p:"門票 500／2人"},
+  {t:"20:00–21:30", a:"太湖古鎮夜景與小吃", x:"腳"},
   {t:"21:30", a:"返回太湖古鎮大酒店", x:"腳", h:"太湖龍之夢古鎮大酒店", p:"平均一晚 1000／2人"},
  ]},
-{day:8, date:"12/31", wd:"四", stage:"hz", tagline:"湖州｜萬柱煙火跨年狂歡夜",
+
+{day:8, date:"12/31", wd:"四", stage:"hz", tagline:"湖州｜萬柱煙火跨年狂歡夜（下午補眠）",
  hotel:"太湖龍之夢古鎮大酒店",
  items:[
-  {t:"11:00–22:00", a:"太湖古鎮：NPC 互動、看秀", x:"腳"},
+  {t:"11:00–14:00", a:"太湖古鎮：NPC 互動、看秀", x:"腳", note:"原為 11:00–22:00，部分內容已移到 12/30"},
+  {t:"14:30–17:30", a:"回房間午睡休息", x:"腳", h:"太湖龍之夢古鎮大酒店", note:"要撐到凌晨看煙火，下午一定要補眠"},
+  {t:"18:00–22:00", a:"太湖古鎮晚餐＋夜間演出", x:"腳"},
   {t:"23:30", a:"煙火頂級卡位：太湖古鎮大酒店靠古鎮側的房間陽台、觀景台先卡位", x:"腳"},
   {t:"00:00", a:"高光時刻：萬柱煙火秀與高空打鐵花 —— 漫天煙火在古鎮上空齊放，兩人一起倒數迎接 2027！", x:"腳", h:"太湖龍之夢古鎮大酒店"},
   {t:"00:30", a:"回房間休息", x:"腳", h:"太湖龍之夢古鎮大酒店", p:"平均一晚 1000／2人"},
@@ -819,11 +1298,12 @@ const DAYS = [
 {day:9, date:"01/01", wd:"五・元旦", stage:"nx", tagline:"湖州 ➔ 南潯古鎮｜尋訪巨富豪宅 ➔ 最具生活氣息的水鄉",
  hotel:"烏鎮望津里精品酒店",
  items:[
-  {t:"11:00", a:"元旦睡飽退房，龍之夢打車直奔南潯古鎮北門（車程 40 分鐘）", c:["nanxun"], x:"網約車", p:"150／2人"},
-  {t:"11:15–16:30", a:"劉氏梯號（紅房子）與張石銘舊宅", c:["liushi","zhangshiming","baijianlou"], x:"腳", p:"門票 350／2人", note:"大行李箱可免費寄存於南潯古鎮遊客中心；中午吃在地雙交麵，下午漫步百間樓"},
+  {t:"11:00", a:"元旦睡飽退房，龍之夢打車直奔南潯古鎮北門", c:["nanxun"], x:"網約車 40–50 分", p:"150／2人"},
+  {t:"11:50", a:"抵達南潯古鎮北門", note:"原表寫 11:15 抵達，但車程 40 分鐘，實際約 11:50，後面時間已一併調整"},
+  {t:"12:00–16:30", a:"劉氏梯號（紅房子）與張石銘舊宅", c:["liushi","zhangshiming","baijianlou"], x:"腳", p:"門票 350／2人", note:"大行李箱可免費寄存於南潯古鎮遊客中心；中午吃在地雙交麵，下午漫步百間樓"},
   {t:"16:30", a:"回到南潯大門口提領行李", x:"腳"},
-  {t:"16:45–17:30", a:"網約車前往烏鎮西柵景區（45 分鐘車程）", x:"網約車", p:"100／2人"},
-  {t:"17:45", a:"抵達西柵遊客中心辦理入住（預約早茶客）", h:"烏鎮望津里精品酒店", p:"2200／2晚／2人"},
+  {t:"16:45–17:35", a:"網約車前往烏鎮西柵景區（約 45 分鐘）", x:"網約車 45 分", p:"100／2人"},
+  {t:"17:45", a:"抵達西柵遊客中心辦理入住（預約早茶客）", bk:"bk_wuzhen", h:"烏鎮望津里精品酒店", p:"2200／2晚／2人"},
   {t:"18:30–21:00", a:"元旦夜遊烏鎮西柵：一進園剛好趕上兩岸華燈初上", c:["wuzhen"], x:"腳", note:"昭明弄堂享用熱騰騰的湖羊肉暖鍋，隨後搭乘雙人夜間搖櫓船"},
   {t:"21:15", a:"回西柵景區內民宿房間", x:"腳", h:"烏鎮望津里精品酒店", p:"平均一晚 1100／2人"},
  ],
@@ -831,13 +1311,14 @@ const DAYS = [
   {n:"百間樓沿河麵館（南潯古鎮午餐）", d:"必吃南潯雙交麵，酥肉加爆魚雙主菜，麵條吸滿濃郁湯汁。", p:"人均 RMB25–40"},
   {n:"昭明弄堂（烏鎮西柵晚餐）", d:"冬天夜遊烏鎮，最幸福的就是臨水吃熱騰騰的砂鍋。招牌：烏鎮紅燒湖羊肉暖鍋（羊肉燉到軟爛、毫無腥味）、醬鴨。搖櫓船 480／1艘船。", p:"人均 RMB100–150"},
  ]},
+
 {day:10, date:"01/02", wd:"六", stage:"nx", tagline:"烏鎮西柵｜元旦市集與老街暖鍋",
  hotel:"烏鎮望津里精品酒店",
  items:[
   {t:"05:30", a:"早茶客（湖邊吃飯）", c:["chashi"], x:"腳", h:"烏鎮望津里精品酒店"},
   {t:"10:30–13:00", a:"換上租借服裝", x:"腳"},
   {t:"13:30–17:00", a:"逛草木本色染坊、打卡木心美術館；下午到「冬季水上茶市」看年貨集市", c:["ranfang","muxin"], x:"腳", p:"門票 80／2人"},
-  {t:"18:00–21:00", a:"昭明弄堂再吃湖羊肉暖鍋，雙人夜間搖櫓船（訂到才有）", x:"腳"},
+  {t:"18:00–21:00", a:"昭明弄堂再吃湖羊肉暖鍋，雙人夜間搖櫓船（訂到才有）", bk:"bk_boat", x:"腳"},
   {t:"21:30", a:"回民宿休息", x:"腳", h:"烏鎮望津里精品酒店", p:"平均一晚 1100／2人"},
  ],
  food:[
@@ -852,7 +1333,7 @@ const DAYS = [
   {t:"16:30–17:30", a:"提早享用冬日晚餐：西柵紅燒羊肉麵或沿河砂鍋", x:"腳"},
   {t:"17:40", a:"搭景區電瓶車至出口行李房提領大行李箱", x:"腳"},
   {t:"18:00", a:"準時撤離烏鎮，景區門口網約車直奔桐鄉高鐵站", x:"網約車", note:"烏鎮打車至桐鄉站 35 分鐘＋高鐵 40 分鐘"},
-  {t:"19:07", a:"搭乘高鐵 G1304 次返回上海虹橋（若有搶到票）", x:"高鐵 ／ 網約車", p:"200／2人", note:"虹橋站打車至豫園飯店約 30 分鐘（需考慮收假塞車），總通勤時間需抓 2 小時 15 分鐘"},
+  {t:"19:07", a:"搭乘高鐵 G1304 次返回上海虹橋（若有搶到票）", bk:"bk_train", x:"高鐵 ／ 網約車", p:"200／2人", note:"虹橋站打車至豫園飯店約 30 分鐘（需考慮收假塞車），總通勤時間需抓 2 小時 15 分鐘"},
   {t:"19:48", a:"抵達上海虹橋火車站"},
   {t:"20:00–20:40", a:"虹橋站 ➔ 豫園飯店，地鐵 10 號線直達，坐 11 站到「豫園站」", x:"地鐵 10 號線", h:"橘子水晶上海外灘豫園酒店", p:"1800／2晚／2人"},
   {t:"20:45", a:"入住豫園附近飯店", h:"橘子水晶上海外灘豫園酒店", p:"平均一晚 900／2人"},
@@ -861,28 +1342,37 @@ const DAYS = [
   {n:"水上茶市喝茶聽評彈（烏鎮午後下午茶）", d:"慢下來享受水鄉收假前的慵懶，點一壺杭白菊或龍井，配江南小茶點。", p:"茶位費人均 RMB40–80"},
  ]},
 
-{day:12, date:"01/04", wd:"一", stage:"sh2", tagline:"上海豫園｜元旦燈會盛大亮燈・高光朝聖夜",
+{day:12, date:"01/04", wd:"一", stage:"sh2", tagline:"上海｜田子坊淮海路買衣服 ➔ 豫園燈會高光夜",
  hotel:"橘子水晶上海外灘豫園酒店",
  items:[
   {t:"10:30", a:"飯店睡飽出門", h:"橘子水晶上海外灘豫園酒店"},
-  {t:"11:00", a:"海底撈大排檔（打浦路店）", x:"網約車"},
-  {t:"13:00–17:00", a:"豫園老街逛街消食（注意：出去後再次進入需另外購票）", x:"腳"},
-  {t:"17:30–21:00", a:"高光時刻：豫園元旦燈會正式亮燈 —— 萬盞神獸燈組同時點亮！", c:["denghui"], x:"腳", note:"兩人在九曲橋上拍出宛如《大魚海棠》的絕美古風神話大片"},
+  {t:"11:00–12:30", a:"海底撈大排檔（打浦路店）", bk:"bk_haidilao", x:"網約車"},
+  {t:"12:40–14:30", a:"田子坊（泰康路 210 弄）逛文創小店與服飾", c:["tianzifang"], x:"步行 5 分", note:"就在海底撈隔壁，石庫門弄堂改造的創意街區"},
+  {t:"14:45–16:00", a:"淮海中路商圈逛街買衣服", c:["huaihai"], x:"地鐵／網約車 10 分", note:"上海最經典的時尚大街，年輕品牌集中；光明邨鮮肉月餅也在這條街上"},
+  {t:"16:30", a:"回到豫園", x:"網約車 15 分"},
+  {t:"17:30–21:00", a:"高光時刻：豫園元旦燈會正式亮燈 —— 萬盞神獸燈組同時點亮！", c:["denghui"], x:"腳", note:"⚠ 豫園燈會傳統是農曆年檔期，元旦場次務必出發前確認；兩人在九曲橋上拍出宛如《大魚海棠》的絕美古風神話大片"},
   {t:"21:30", a:"走回豫園飯店", x:"腳", h:"橘子水晶上海外灘豫園酒店", p:"平均一晚 900／2人"},
  ],
  food:[
   {n:"海底撈大排檔（打浦路店）", d:"比常規海底撈更具地方市井、大排檔風格，價格親民、出菜極快。招牌：撈派滑牛肉、特色現炸酥肉、大排檔限定熱滷。", p:"人均 RMB80–110"},
-  {n:"豫園老街伴手禮衝刺", d:"必買【上海哈爾濱食品廠】蝴蝶酥（老字號、奶香濃郁超酥脆）、【沈大成】青糰與一品糕。", p:"一盒約 RMB30–60"},
+  {n:"光明邨大酒家（淮海中路 588 號）", c:["huaihai"], d:"上海排隊王，鮮肉月餅現烤現賣，評論裡不少人說是整趟上海吃到最好的東西。也有蟹粉麵與本幫熟食。", p:"鮮肉月餅單個約 RMB8–10"},
  ]},
-{day:13, date:"01/05", wd:"二", stage:"sh2", tagline:"上海 ➔ 台北｜招牌伴手禮最後衝刺 ➔ 返台",
+
+{day:13, date:"01/05", wd:"二", stage:"sh2", tagline:"上海 ➔ 台北｜老飯店午餐 ＋ 伴手禮最後衝刺",
  hotel:"橘子水晶上海外灘豫園酒店",
  items:[
   {t:"10:00", a:"退房，寄放行李", x:"腳", h:"橘子水晶上海外灘豫園酒店"},
-  {t:"10:30–12:30", a:"豫園城隍廟", c:["chenghuangmiao"], x:"腳"},
-  {t:"15:00", a:"回飯店拿行李", x:"腳"},
+  {t:"10:30–12:00", a:"豫園城隍廟", c:["chenghuangmiao"], x:"腳"},
+  {t:"12:00–13:30", a:"午餐：上海老飯店（福佑路 242 號・本幫菜發源地）", c:["laofandian"], bk:"bk_laofan", x:"腳", note:"就在豫園旁邊，走路幾分鐘；1875 年創立的老字號"},
+  {t:"13:45–14:45", a:"第一食品商店（南京東路 720 號）採買伴手禮", c:["shouxinli"], x:"地鐵 10 號線 1 站", note:"蝴蝶酥、大白兔、梨膏糖、五香豆一站買齊"},
+  {t:"15:00", a:"回飯店拿行李", x:"地鐵／步行"},
   {t:"15:15", a:"打車前往上海浦東機場 PVG（預留收假塞車時間）", x:"網約車"},
   {t:"20:10–22:10", a:"搭機返台", x:"飛機"},
   {t:"22:10 後", a:"安全抵台，到家 ✈️🏡"},
+ ],
+ food:[
+  {n:"上海老飯店（福佑路 242 號）", c:["laofandian"], d:"1875 年創立的本幫菜老字號，招牌八寶鴨、紅燒肉、油爆蝦。備案：綠波廊（國宴級、價位高）、寧波湯糰店（蟹粉小籠與湯糰，便宜快速）。", p:"人均 RMB120–200"},
+  {n:"第一食品商店（伴手禮）", c:["shouxinli"], d:"必買：上海哈爾濱食品廠蝴蝶酥、沈大成青糰與一品糕、大白兔奶糖、梨膏糖、五香豆。", p:"一盒約 RMB30–60"},
  ]},
 ];
 
@@ -1086,7 +1576,8 @@ Object.keys(STAGE_META).forEach(key=>{
 
     const itemsHtml = d.items.map(it=>{
       const used = new Set();
-      const act = cultureWrap(it.a, it.c, used);
+      const bell = it.bk ? `<button class="qremind" data-c="${it.bk}" title="需要事先預約" aria-label="需要事先預約">${BELL_ICON}</button>` : "";
+    const act = cultureWrap(it.a, it.c, used) + bell;
       const note = it.note ? cultureWrap(it.note, it.c, used) : "";
       const chips = [];
       if(it.x) chips.push(`<span class="chip trans">${it.x}</span>`);
@@ -1122,6 +1613,7 @@ Object.keys(STAGE_META).forEach(key=>{
         <span class="day-hotel">${BED_ICON}${d.hotel}</span>
         <div class="day-tagline">${d.tagline}</div>
       </div>
+      ${routeHtml(d.day)}
       <div class="timeline">${itemsHtml}</div>
       ${foodHtml}
     `;
@@ -1147,6 +1639,9 @@ HOTELS.forEach(h=>{
   hotelsEl.appendChild(c);
 });
 
+document.querySelectorAll(".remind-hint .qremind").forEach(b=>{ b.innerHTML = BELL_ICON; });
+applyMapProvider();
+
 /* ---------------- Culture appendix (print) ---------------- */
 document.getElementById("culture-appendix-list").innerHTML =
   Object.keys(CULTURE).map(k=>{
@@ -1154,7 +1649,7 @@ document.getElementById("culture-appendix-list").innerHTML =
     return `<div class="ca-item">
       <h3>${c.n} <span class="ca-era">${c.e || ""}</span></h3>
       ${(c.p||[]).map(t=>`<p>${t}</p>`).join("")}
-      ${(c.f&&c.f.length)?`<ul>${c.f.map(t=>`<li>${t}</li>`).join("")}</ul>`:""}
+      ${(c.f&&c.f.length)?`<p style="margin-top:10px;font-size:.8rem;color:var(--accent-strong)">${c.fh||"小知識"}</p><ul>${c.f.map(t=>`<li>${t}</li>`).join("")}</ul>`:""}
     </div>`;
   }).join("");
 
@@ -1177,6 +1672,7 @@ function openCulture(key){
   cBody.innerHTML = (c.p || []).map(t=>`<p>${t}</p>`).join("");
   if(c.f && c.f.length){
     cFactsList.innerHTML = c.f.map(t=>`<li>${t}</li>`).join("");
+    cFacts.querySelector(".fh").textContent = c.fh || "小知識";
     cFacts.style.display = "block";
   } else {
     cFacts.style.display = "none";

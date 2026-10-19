@@ -262,11 +262,85 @@
   .totop.show{ opacity:1; pointer-events:auto; }
   .totop svg{ width:18px; height:18px; }
 
-  @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto;} }
+  /* ---------- Culture links ---------- */
+  .culture-hint{
+    display:flex; align-items:center; gap:9px; flex-wrap:wrap;
+    background:var(--plum-tint); border-radius:12px; padding:12px 16px;
+    font-size:.88rem; color:var(--ink); margin-top:20px; line-height:1.6;
+  }
+  .culture-hint svg{ width:16px; height:16px; color:var(--plum); flex-shrink:0; }
+  .culture-hint .demo{ color:var(--plum); border-bottom:1.5px dotted var(--plum); }
+
+  .clink{
+    font:inherit; color:var(--plum); background:none; border:0; padding:0 1px; margin:0;
+    border-bottom:1.5px dotted var(--plum); cursor:pointer; line-height:inherit;
+    border-radius:2px; transition:background .15s ease;
+  }
+  .clink:hover{ background:var(--plum-tint); }
+  .clink:focus-visible{ outline:2px solid var(--plum); outline-offset:2px; }
+  .cchip{
+    font-size:.74rem; border-radius:6px; padding:3px 9px; border:1px dashed var(--plum);
+    background:none; color:var(--plum); cursor:pointer; display:inline-flex; align-items:center; gap:4px;
+    font-family:"Noto Sans TC",sans-serif;
+  }
+  .cchip svg{ width:12px; height:12px; }
+  .cchip:hover{ background:var(--plum-tint); }
+
+  /* ---------- Culture modal ---------- */
+  .cmodal{ position:fixed; inset:0; z-index:60; display:none; }
+  .cmodal.open{ display:block; }
+  .cmodal-bg{ position:absolute; inset:0; background:rgba(10,18,32,.6); }
+  .cmodal-card{
+    position:relative; margin:5vh auto 0; width:min(600px, calc(100% - 28px));
+    max-height:86vh; overflow-y:auto; background:var(--surface); color:var(--ink);
+    border:1px solid var(--border); border-radius:20px; padding:26px 26px 30px;
+    box-shadow:0 28px 70px -22px rgba(0,0,0,.6);
+    animation:crise .22s ease-out;
+  }
+  @keyframes crise{ from{ opacity:0; transform:translateY(14px); } to{ opacity:1; transform:none; } }
+  .cmodal-close{
+    position:absolute; top:14px; right:14px; width:34px; height:34px; border-radius:50%;
+    border:1px solid var(--border); background:var(--surface-2); color:var(--ink-muted);
+    cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:1.15rem; line-height:1;
+  }
+  .cmodal-close:hover{ color:var(--ink); }
+  .cmodal-era{
+    font-family:"IBM Plex Mono",monospace; font-size:.72rem; letter-spacing:.08em;
+    color:var(--plum); background:var(--plum-tint); border-radius:100px; padding:4px 12px; display:inline-block;
+  }
+  .cmodal-card h3{ font-size:1.45rem; margin:12px 0 2px; padding-right:40px; }
+  .cmodal-body p{ margin-top:14px; font-size:.95rem; line-height:1.9; }
+  .cmodal-facts{ margin-top:22px; border-top:1px solid var(--border); padding-top:16px; }
+  .cmodal-facts .fh{
+    font-family:"IBM Plex Mono",monospace; font-size:.72rem; letter-spacing:.12em;
+    text-transform:uppercase; color:var(--accent-strong); margin-bottom:10px;
+  }
+  .cmodal-facts ul{ margin:0; padding-left:1.1em; }
+  .cmodal-facts li{ font-size:.88rem; color:var(--ink-muted); margin-bottom:8px; line-height:1.75; }
+
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    .cmodal-card{ animation:none; }
+  }
+
+  /* ---------- Print-only culture appendix ---------- */
+  #culture-appendix{ display:none; }
+  #culture-appendix .ca-item{ margin-top:22px; break-inside:avoid; page-break-inside:avoid; }
+  #culture-appendix h3{ font-size:1.15rem; margin-bottom:4px; }
+  #culture-appendix .ca-era{
+    font-family:"IBM Plex Mono",monospace; font-size:.72rem; color:var(--plum); letter-spacing:.06em;
+  }
+  #culture-appendix p{ font-size:.9rem; line-height:1.8; margin-top:8px; }
+  #culture-appendix ul{ margin:8px 0 0; padding-left:1.1em; }
+  #culture-appendix li{ font-size:.84rem; color:var(--ink-muted); line-height:1.7; }
 
   @media print{
     .totop{ display:none !important; }
     #nav-section{ display:none; }
+    .cmodal{ display:none !important; }
+    .clink{ border-bottom:none; color:var(--ink); }
+    .cchip{ display:none; }
+    #culture-appendix{ display:block; }
     body{ background:#fff; }
     section, .stage{ padding:22px 0; }
     .day, .hcard, .notes{ break-inside:avoid; page-break-inside:avoid; box-shadow:none; }
@@ -375,6 +449,10 @@
       <h2>快速跳到當天</h2>
     </div>
     <div class="daynav" id="daynav"></div>
+    <p class="culture-hint">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5V5a2 2 0 0 1 2-2h12v18H6a2 2 0 0 1-2-1.5z"/><path d="M8 7h7M8 11h7"/></svg>
+      <span>景點名稱有<span class="demo">虛線底線</span>的，點一下會跳出它的歷史與文化故事。</span>
+    </p>
   </section>
 
   <div id="stages"></div>
@@ -386,6 +464,15 @@
       <p class="desc">四段旅程、四種下榻風格 —— 從外灘鬧區到水鄉民宿。</p>
     </div>
     <div class="hotels" id="hotels"></div>
+  </section>
+
+  <section id="culture-appendix">
+    <div class="section-head">
+      <span class="kicker">Appendix</span>
+      <h2>景點人文筆記</h2>
+      <p class="desc">行程中各個景點的歷史與文化背景（網頁版可直接點景點名稱查看）。</p>
+    </div>
+    <div id="culture-appendix-list"></div>
   </section>
 
   <section id="notes-section">
@@ -412,6 +499,20 @@
   <p>行程僅供參考，實際景點營業時間、票務與交通請以現場為準。</p>
   <p style="margin-top:6px;">祝旅途平安順心，跨年快樂 🎆</p>
 </footer>
+
+<div class="cmodal" id="cmodal" role="dialog" aria-modal="true" aria-labelledby="cmodal-title">
+  <div class="cmodal-bg" data-close="1"></div>
+  <div class="cmodal-card">
+    <button class="cmodal-close" id="cmodal-close" aria-label="關閉">✕</button>
+    <span class="cmodal-era" id="cmodal-era"></span>
+    <h3 id="cmodal-title"></h3>
+    <div class="cmodal-body" id="cmodal-body"></div>
+    <div class="cmodal-facts" id="cmodal-facts">
+      <div class="fh">小知識</div>
+      <ul id="cmodal-facts-list"></ul>
+    </div>
+  </div>
+</div>
 
 <a href="#top" class="totop" id="totop" aria-label="回到頂端">
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="M5 12l7-7 7 7"/></svg>
@@ -440,6 +541,167 @@ function iconOf(x){
 const FOOD_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2v7a2 2 0 0 0 2 2v11M6 2v7M9 2v7M12 2v9a3 3 0 0 0 3 3v8M17 2c-2 0-3 3-3 7s1 4 3 4"/></svg>';
 const BED_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v6"/><path d="M3 18v2M21 18v2M3 12V7M8 12v-1a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v1"/></svg>';
 
+/* ---------------- Culture notes ---------------- */
+const CULTURE = {
+xintiandi:{ n:"新天地・石庫門", m:"新天地", e:"1860s 起 ‧ 石庫門里弄",
+ p:["上海開埠後人口湧入，本地營造商把江南傳統三合院的格局壓縮進西式聯排住宅，門框用石條箍成，配一對厚重黑漆木門與銅環——這就是「石庫門」。一道門內往往住著好幾戶人家，亭子間、曬台、弄堂口的叫賣聲，構成了近代上海最典型的市井生活。",
+    "一九九○年代末，太平橋一帶的舊式里弄被整體改造：外牆的清水青磚、石門框與老虎窗按原樣保留，內部換成餐廳、酒吧與店鋪，成為今天的新天地。它的爭議與成功同樣有名——有人說它把弄堂變成了舞台，也有人說它讓石庫門免於被拆光。",
+    "這一帶還有個分量很重的坐標：興業路七十六號的中共一大會址，本身就是一幢一九二○年代的石庫門住宅。"],
+ f:["「石庫門」的「庫」一說來自寧波話的「箍」，指用石條箍住門框。","聖誕市集與燈飾是新天地最早打響名號的活動之一，每年十二月登場。"]},
+
+waitanyuan:{ n:"洛克・外灘源", m:"洛克・外灘源", e:"1873 年起 ‧ 外灘的源頭",
+ p:["外灘的北端、蘇州河匯入黃浦江的轉角，是上海開埠後外國人最早落腳的地方，所以被稱為「外灘源」——外灘的源頭。",
+    "圓明園路兩側保留了一整排一九二○至三○年代的老建築：安培洋行、蘭心大樓、真光大樓等。街角那幢紅磚、陡坡頂的原英國領事館（一八七三年重建）是上海現存最早的領事館建築，院子裡的大樹比周圍大多數房子都老。",
+    "二○一○年前後整區修復開放後，這裡成了全上海最有歐洲味道的步行街區。聖誕期間掛滿瀑布般的星星燈網、整點飄落人工雪花，正是為了呼應這批歐式建築的身世。"],
+ f:["圓明園路與北京的圓明園無關，是租界時期沿用下來的路名。","街區裡的協進大樓、女青年會大樓出自中國第一代建築師之手。"]},
+
+bund:{ n:"外灘・萬國建築群", m:"外灘海關", e:"1844 年起 ‧ 萬國建築博覽群",
+ p:["外灘這條弧線是上海近代史的正面。一八四○年代開埠後，黃浦江西岸的縴道被闢為租界外灘，百年間陸續建起五十二幢風格各異的大樓：新古典主義的柱廊、哥德式的尖拱、裝飾藝術（Art Deco）的幾何線條並肩而立，被稱為「萬國建築博覽群」。",
+    "亮燈的主角是江海關大樓（一九二七年落成），鐘樓上的大鐘仿倫敦大笨鐘鑄造，是當時亞洲最大的海關鐘，整點鐘聲曾經是全上海對時的依據。隔壁穹頂內有馬賽克壁畫的是原匯豐銀行大樓（一九二三年），再往北走則是裝飾藝術風格的和平飯店（原沙遜大廈，一九二九年）。",
+    "整排建築同步亮起暖金色燈光的那一秒，是近年外灘最受歡迎的「儀式」，沿江的人群常會自發倒數。"],
+ f:["Bund 一詞來自英屬印度的用語，原意是「堤岸」。","對岸陸家嘴的天際線只有三十多年歷史，兩岸對望等於一百八十年的時間差。"]},
+
+yuyuan:{ n:"豫園", m:"豫園", e:"1559 年 ‧ 明代江南園林",
+ p:["豫園是一座為父親而建的園子。明嘉靖三十八年（一五五九年）起，四川布政使潘允端為了讓年邁的父親潘恩（曾任刑部尚書）有個頤養之地，在自家宅旁闢園，前後營造將近二十年。「豫」取「愉悅老親」之意——帶爸媽來看這座園子，剛好對上它當初的本意。",
+    "園內以假山、水池、廳堂層層套疊，是江南古典園林的代表作。鎮園之寶「玉玲瓏」是一塊太湖石，與蘇州留園的冠雲峰、杭州的皺雲峰並稱江南三大名石，相傳是北宋花石綱的遺物。",
+    "一八五三年小刀會起義時，園中的點春堂曾被當作指揮部。今天園外的九曲橋與湖心亭，則是上海最老的茶樓所在。"],
+ f:["九曲橋刻意轉折，舊時的說法是「直路通鬼、曲橋避邪」。","潘家後來沒落，豫園幾度易主、一度荒廢，現貌是一九五○年代之後逐步修復的。"]},
+
+chenghuangmiao:{ n:"上海城隍廟", m:"城隍廟", e:"1403 年 ‧ 一廟三城隍",
+ p:["城隍是中國民間守護城池的神祇。上海城隍廟始建於明永樂年間（一四○三年），由金山神廟改建而來。最特別的是它「一廟三城隍」：漢代名將霍光、元末明初的上海鄉賢秦裕伯，以及鴉片戰爭中在吳淞口殉國的名將陳化成，三位一同受祀。",
+    "廟前廣場自清末起就是上海最熱鬧的集市，香客、攤販與茶樓聚在一起，逐漸長成今天的豫園商城小吃街——南翔饅頭店、綠波廊、寧波湯糰店都在這一帶。"],
+ f:["上海話說「到城隍廟白相」，「白相」就是玩耍，可見它在老上海人心中的地位。","農曆新年的城隍廟廟會，是上海保留至今最完整的傳統年節活動之一。"]},
+
+nanxiang:{ n:"南翔小籠", m:"南翔饅頭店", e:"1871 年 ‧ 小籠包的起點",
+ p:["小籠包的祖師爺在嘉定南翔鎮。清同治十年（一八七一年），南翔鎮「日華軒」的黃明賢把大肉饅頭改良成「重餡薄皮、以大改小」的小籠饅頭：麵皮不發酵、每只摺出十幾道褶、以雞湯凝凍入餡，蒸熟後凍化成湯。",
+    "後來黃家後人把這門手藝帶進上海城隍廟，開出南翔饅頭店，小籠包從此成了上海的城市名片。"],
+ f:["在上海要說「小籠饅頭」才道地，「小籠包」是外地的叫法。","吃法口訣：輕輕提、慢慢移、先開窗、後喝湯。"]},
+
+wujiaochang:{ n:"五角場・大上海計劃", m:"五角場", e:"1929 年 ‧ 未竟的新市中心",
+ p:["五角場的名字來自五條大路交會的放射狀路口，而這個路口源自一場未竟的雄心。一九二九年，民國政府推出「大上海計劃」，想在租界之外的江灣一帶，另建一座中國人自己的新市中心，以五角場為核心向外放射。",
+    "計劃因戰爭中斷，卻留下一批「中國固有式」建築——大屋頂、斗拱、彩畫，骨子裡卻是鋼筋混凝土，如今多半由大學與機關使用。附近的道路至今還叫政通路、國權路、民京路，都是當年規劃留下的名字。",
+    "今天這裡是上海東北部的商圈，下沉式廣場上的巨型彩蛋成了新地標，跨年與節慶的 3D 燈光秀就打在它的曲面上。"],
+ f:["彩蛋廣場的正式名稱是「五角場下沉式廣場」，當地人直接叫它「彩蛋」。","江灣的舊上海市政府大廈現為上海體育大學校舍，仍保留著巨大的中式屋頂。"]},
+
+qianguqing:{ n:"《上海千古情》", m:"《上海千古情》", e:"宋城演藝 ‧ 大型實景歌舞",
+ p:["《千古情》是宋城演藝的招牌演出形式，一九九七年從杭州《宋城千古情》起家，之後在麗江、三亞、西安等地各做一台，用大型舞台機械、水幕與升降台講述當地的歷史。",
+    "上海這一台以開埠、十里洋場、石庫門生活到抗戰為主線，是系列中少數以近代史、而非古代傳說為題材的作品。舞台會在演出中整段升降、下雨、噴水，所以座位排數直接影響觀看體驗——行程裡特別註記要搶第八到十五排，就是為了既能平視舞台，又不會被水幕波及。"],
+ f:["千古情系列的演出多半控制在一小時內，節奏極快。","園區裡的《大地震》沉浸式劇場，是用座椅震動與聲光重現災難現場。"]},
+
+pingjianglu:{ n:"平江路", m:"平江路", e:"南宋至今 ‧ 八百年未改的街巷",
+ p:["平江路是一張活著的宋代地圖。南宋紹定二年（一二二九年）刻的《平江圖》碑，記錄了當時蘇州城的街巷與河道；八百年後對照今天的平江歷史街區，格局幾乎沒有改變——河街並行、水陸雙棋盤，這在中國城市裡極為罕見。",
+    "一條河、一條街、一排枕河人家：橋下是搖櫓船，橋上是居民晾衣服。路兩側的小巷深處仍住著大量蘇州本地人，所以它不只是景區，也是真正的生活場所。"],
+ f:["《平江圖》碑現存於蘇州碑刻博物館，是中國現存最古老的城市平面圖之一。","「平江」是蘇州在宋代的行政名稱。"]},
+
+zhuozhengyuan:{ n:"拙政園", m:"拙政園", e:"約 1509 年 ‧ 世界文化遺產",
+ p:["拙政園是中國四大名園之一，也是蘇州最大的古典園林，約五萬二千平方公尺。明代正德初年（約一五○九年），御史王獻臣在官場受挫後回到蘇州，買下大弘寺舊址造園。",
+    "園名取自晉代潘岳〈閒居賦〉：「灌園鬻蔬，以供朝夕之膳……是亦拙者之為政也」——澆園種菜、養活一家，也算是笨拙之人的從政方式。這份自嘲，是中國士大夫失意之後最體面的轉身。",
+    "全園以水為中心，水面約佔三分之一，亭台樓閣沿水分布，講究「步移景異」。一九九七年與蘇州其他古典園林一同列入世界文化遺產。"],
+ f:["太平天國時期，這裡曾是忠王李秀成王府的一部分。","冬季遊人較少，枯山瘦水反而最能看出園林的骨架與疊石功夫。"]},
+
+huqiu:{ n:"虎丘", m:"虎丘", e:"春秋至今 ‧ 2500 年",
+ p:["虎丘的歷史比蘇州城還長。相傳春秋時吳王闔閭葬於此，下葬三日後有白虎踞於山上，因而得名；山下的劍池，傳說正是埋藏闔閭陪葬寶劍之處，至今未曾發掘。",
+    "山頂的雲岩寺塔（虎丘塔）建於五代末至北宋初（約九五九至九六一年），是一座八角七層磚塔，因地基沉陷不均而向北傾斜，塔頂偏離中心超過兩公尺，被稱為「中國的比薩斜塔」——而且它比比薩斜塔還早建了一百多年。",
+    "蘇東坡留下一句流傳極廣的話：「到蘇州不遊虎丘乃憾事也。」"],
+ f:["千人石相傳是高僧講經時，千人列坐聽法之處。","一九五○年代大修時，從塔心發現了越窯青瓷蓮花碗等五代文物。"]},
+
+liuyuan:{ n:"留園", m:"留園", e:"1593 年 ‧ 世界文化遺產",
+ p:["留園與拙政園同列中國四大名園，氣質卻完全不同：拙政園以水取勝，留園以建築空間見長。明萬曆二十一年（一五九三年）由太僕寺少卿徐泰時始建，清代幾度易主，光緒年間盛康購得後，取舊主姓氏諧音改名「留園」。",
+    "全園用七百多公尺的曲廊，把廳堂、庭院與假山串在一起；走廊忽明忽暗、忽窄忽寬，窗格不斷框出新的畫面，是中國園林「空間序列」的教科書。",
+    "園中的冠雲峰是一塊高約六公尺的太湖石，瘦、皺、漏、透四字俱全，被譽為江南園林第一名石，相傳也是北宋花石綱的遺物。"],
+ f:["戰亂年代留園一度淪為養馬場，一九五三年才重新修復開放。","五峰仙館的楠木廳，是蘇州現存最大的廳堂之一。"]},
+
+shantang:{ n:"七里山塘", m:"七里山塘", e:"825 年 ‧ 白居易所築",
+ p:["唐寶曆元年（八二五年），白居易出任蘇州刺史，為了方便往來虎丘的水陸交通，主持開鑿山塘河、修築山塘街，從閶門到虎丘全長約七里，「七里山塘」因此得名——這條街從誕生起就是一項公共工程。",
+    "明清兩代山塘街是蘇州最繁華的商業水街。《紅樓夢》開篇就說閶門一帶是「最是紅塵中一二等富貴風流之地」；清代徐揚的《姑蘇繁華圖》長卷，畫的也正是這一段的盛況。",
+    "入夜後沿河紅燈籠逐一亮起，倒影落在水面，搖櫓船從橋洞穿過——行程裡標為「高光時刻」的，就是這個畫面。"],
+ f:["山塘街上的古戲台仍定期上演崑曲與評彈。","當地人把白居易稱作「白公」，山塘街也被叫做白公堤。"]},
+
+songhelou:{ n:"松鶴樓", m:"松鶴樓", e:"1737 年 ‧ 蘇幫菜老店",
+ p:["松鶴樓創立於清乾隆二年（一七三七年），是現存最老的蘇幫菜館之一，至今將近三百年。",
+    "招牌菜松鼠桂魚的做法，是把魚肉剞成菱形花刀、裹粉油炸至翻捲如松鼠尾，再澆上滾燙的糖醋滷汁，上桌時還會發出滋滋聲。民間傳說乾隆下江南時曾在此用膳並大加讚賞——故事多半是後人附會，但這道菜確實體現了蘇幫菜「甜出頭、鹹收口」的性格。"],
+ f:["蘇幫菜講究時令，冬季的招牌還有響油鱔糊與清炒河蝦仁。","店名裡的「松鶴」取長壽吉祥之意。"]},
+
+huzhou:{ n:"湖州・太湖", m:"湖州", e:"湖筆之鄉 ‧ 太湖南岸",
+ p:["湖州是環太湖唯一以「湖」命名的城市，位於太湖南岸。這裡出產湖筆——善璉鎮的湖筆與徽墨、宣紙、端硯並稱文房四寶，元代以後取代宣筆，成為書畫家的首選。",
+    "太湖的冬季餐桌主角是「太湖三白」：白魚、白蝦、銀魚，講究清蒸或清炒，不靠重調味。湖州城裡的百年小吃則是丁蓮芳千張包子與周生記餛飩，兩家都創立於清末民初。"],
+ f:["湖州在近代是絲綢重鎮，南潯的輯里湖絲就出自這一帶。","太湖三白離水後鮮味流失很快，所以多半只在環湖一帶才吃得到。"]},
+
+longzhimeng:{ n:"太湖龍之夢古鎮", m:"太湖古鎮", e:"當代新建 ‧ 大型旅遊綜合體",
+ p:["這裡要誠實說明：太湖龍之夢樂園是近年新建的大型旅遊綜合體，不是歷史古鎮。它佔地極大，把動物世界、馬戲城、冰雪世界、古鎮街區與數千間客房的酒店群整合在一起。",
+    "園區裡的「太湖古鎮」是仿古建築街區，形制參照江南水鄉，用來承載演出、小吃與夜間的燈光水舞秀。它真正的價值在於動線集中、冬天不必奔波，很適合帶長輩——而道地的古鎮氛圍，行程後半的南潯與烏鎮會補上。"],
+ f:["跨年夜的萬柱煙火與高空打鐵花，是園區一年中規模最大的演出。","打鐵花源自河南、山西一帶的傳統技藝，把熔化的鐵水擊打上天，形成火樹銀花。"]},
+
+nanxun:{ n:"南潯古鎮", m:"南潯古鎮", e:"南宋建鎮 ‧ 世界文化遺產",
+ p:["南潯在南宋淳祐年間（十三世紀中）建鎮，但它真正的黃金時代在清末。靠著「輯里湖絲」——一種纖維細長、潔白堅韌的生絲——南潯商人把生意做到上海洋行與海外，一八五一年輯里絲還在倫敦首屆世界博覽會上拿下金獎。",
+    "財富堆出了一個說法：「四象、八牛、七十二墩狗」，用動物的大小比喻鎮上富商的財力等級，四象之首是劉鏞。這些家族賺了錢之後建宅邸、辦學堂、藏古籍，也把歐洲的建材與樣式整船運回江南，造出中西合璧的奇特民居。",
+    "所以南潯和一般水鄉很不一樣：它既有小橋流水，也有羅馬柱、彩色玻璃與法式舞廳。二○一四年作為中國大運河的遺產點，列入世界文化遺產。"],
+ f:["嘉業藏書樓是中國近代著名的私家藏書樓，由劉家後人所建。","鎮上至今住著大量居民，生活氣息比許多商業化古鎮濃厚。"]},
+
+liushi:{ n:"劉氏梯號（紅房子）", m:"劉氏梯號", e:"清末 ‧ 中西合璧宅邸",
+ p:["這是「四象」之首劉鏞的三子劉梯青的宅邸，因為外立面大量使用紅磚，當地人直接叫它「紅房子」。",
+    "最有意思的是它的拼接方式：前半部是規規矩矩的江南傳統廳堂，中軸對稱、磚雕門樓；穿過去卻突然接上一幢南歐風格的紅磚洋樓，有壁爐、落地長窗與彩色玻璃。一個家族在同一座宅子裡同時過著兩種生活——這正是清末江南富商的真實寫照。"],
+ f:["洋樓部分的建材與工匠，不少來自上海租界。","「梯號」指的是劉梯青的堂號，不是樓梯。"]},
+
+zhangshiming:{ n:"張石銘舊宅（懿德堂）", m:"張石銘舊宅", e:"清末 ‧ 江南第一民宅",
+ p:["張石銘（張鈞衡）是南潯「四象」張家的後人，也是著名的藏書家與收藏家。這座懿德堂被稱為「江南第一民宅」，佔地四千多平方公尺，五落四進、一百五十多個房間。",
+    "外觀仍是江南的白牆黛瓦，走進去卻層層遞進地變成另一個世界：磚雕門樓與木雕格扇之後，是鋪著進口瓷磚的歐式舞廳、藍色彩繪玻璃窗、鑄鐵欄杆與羅馬柱。那些法國彩玻在冬日午後，會把整個房間的光打成藍紫色。"],
+ f:["宅中的木雕、磚雕、石雕與玻璃雕合稱「四雕」，工藝水準極高。","彩色玻璃多是晚清從法國整批進口，至今大致完好。"]},
+
+baijianlou:{ n:"百間樓", m:"百間樓", e:"明萬曆年間 ‧ 沿河民居群",
+ p:["相傳明代萬曆年間，禮部尚書董份為孫媳婦的陪嫁家眷，在河兩岸建屋百間，因而得名百間樓。",
+    "它是江南現存規模較大、保存較完整的沿河民居群：臨水一面有連續的廊棚，下雨天可以沿河走一整段不撐傘；牆頭是江南特有的封火山牆，一道道疊上去像波浪。最難得的是至今仍有居民在此生活，晾衣竿、洗菜的河埠頭、河邊閒聊都是真的。"],
+ f:["廊棚在江南又叫「一落水」，是水鄉應對多雨氣候的智慧。","清晨與黃昏人最少，也最適合拍照。"]},
+
+wuzhen:{ n:"烏鎮西柵", m:"烏鎮西柵", e:"唐代設鎮 ‧ 1300 年",
+ p:["烏鎮一帶有七千多年的文明痕跡，唐代設鎮至今一千三百多年。京杭大運河從鎮旁經過，使它長期是水陸要衝與絲米集散地。鎮子以市河為界分東西南北四柵，「柵」原本指水道上的柵欄關卡。",
+    "西柵是二○○三年之後整體修復開發的部分：老建築按原樣修繕，部分居民遷出，定位為可以住下來的度假區——所以夜裡遊人散去後特別安靜，橋與水的倒影是它最大的資產。相較之下，東柵保留了較多原住民的日常。",
+    "這裡也是作家茅盾（沈德鴻）的故鄉，《林家舖子》《春蠶》寫的就是這一帶江南小鎮的人與事。"],
+ f:["西柵景區要靠擺渡船進出，夜裡景區外的人進不來，所以住在裡面才看得到最安靜的烏鎮。","每年的烏鎮戲劇節也在這裡舉辦。"]},
+
+muxin:{ n:"木心美術館", m:"木心美術館", e:"2015 年開館 ‧ 風啊水啊一頂橋",
+ p:["木心（一九二七至二○一一）是烏鎮人，既是畫家也是作家。他年輕時離鄉，後半生旅居紐約，晚年回到烏鎮定居直到辭世。他的《文學回憶錄》由學生陳丹青整理出版後影響極大，短詩〈從前慢〉更是廣為流傳。",
+    "美術館二○一五年開館，建築由貝聿銘的弟子操刀，幾個方盒子沉在水面上，取木心自己的句子「風啊，水啊，一頂橋」為意象。館內常設木心的繪畫與手稿，空間極安靜，很適合在元旦連假的午後慢慢待著。"],
+ f:["陳丹青是這座美術館的館長。","館內的獄中手稿展區，是理解木心生命經歷的關鍵。"]},
+
+ranfang:{ n:"草木本色染坊", m:"草木本色染坊", e:"傳統工藝 ‧ 藍印花布",
+ p:["藍印花布是江南流傳數百年的民間印染：用鏤空花版把石灰與黃豆粉調成的防染漿刮在白布上，浸入由蓼藍發酵而成的靛藍染缸，反覆浸染氧化，最後刮去漿料，藍底白花就顯出來了。",
+    "染坊最壯觀的是晾布場：十幾公尺高的木架上垂下一匹匹藍白長布，風一吹整片擺動，是烏鎮最著名的取景地之一。"],
+ f:["靛藍來自植物蓼藍，所以叫「草木本色」。","傳統藍印花布多用於被面、包袱與頭巾，圖案多取吉祥寓意。"]},
+
+chashi:{ n:"水上茶市・早茶客", m:"早茶客", e:"水鄉晨市 ‧ 清晨五點半",
+ p:["水鄉的早市原本就在船上：周邊村民搖船到鎮口，天還沒亮就聚在河面交易魚蝦菜蔬，順便上岸喝一碗茶、吃塊糕。西柵的「水上茶市」保留的就是這個清晨的場景。",
+    "冬天清晨五點半，茶館裡熱氣騰騰，煎餅、小餛飩、鴨蛋夾肉、燒餅一樣樣端上來，配的是本地的杭白菊或龍井。定勝糕是其中最有故事的一味——相傳與古代出征祝捷有關，做成梅花形、包豆沙餡，取「定能得勝」的彩頭。"],
+ f:["住景區官方酒店通常可免費預約早茶客名額，記得提前跟民宿確認。","午後的水上茶市還有評彈演出，那是蘇州與杭嘉湖一帶的說唱曲藝。"]},
+
+denghui:{ n:"豫園燈會", m:"豫園元旦燈會", e:"1995 年起 ‧ 國家級非遺",
+ p:["豫園燈會是上海最具代表性的節慶活動之一。一九九五年起，豫園商城接續民間元宵掛燈的傳統大規模舉辦，二○一一年以「豫園燈會」之名列入國家級非物質文化遺產名錄。",
+    "傳統上它以農曆新年為主場，近年則提前到元旦前後就點亮，燈組主題每年更換，常取材自《山海經》的神獸。數以萬計的燈同時亮起時，九曲橋與湖心亭倒映在水面，是整趟行程視覺最強的一夜。"],
+ f:["九曲橋上人潮極多，亮燈前半小時先卡位會輕鬆很多。","燈組多為手工紮製，骨架、裱糊、繪製都有專門的匠人。"]},
+};
+
+const BOOK_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5V5a2 2 0 0 1 2-2h12v18H6a2 2 0 0 1-2-1.5z"/><path d="M8 7h7"/></svg>';
+
+function cultureWrap(text, keys, used){
+  if(!keys) return text;
+  keys.forEach(k=>{
+    if(used.has(k)) return;
+    const c = CULTURE[k];
+    if(!c) return;
+    const label = c.m || c.n;
+    if(text.includes(label)){
+      text = text.replace(label, `<button class="clink" data-c="${k}">${label}</button>`);
+      used.add(k);
+    }
+  });
+  return text;
+}
+function cultureChips(keys, used){
+  if(!keys) return "";
+  return keys.filter(k=>CULTURE[k] && !used.has(k))
+    .map(k=>`<button class="cchip" data-c="${k}">${BOOK_ICON}${CULTURE[k].n}</button>`).join("");
+}
+
 /* ---------------- Data ---------------- */
 const DAYS = [
 {day:1, date:"12/24", wd:"四", stage:"sh1", tagline:"台北 ➔ 上海｜聖誕夜遊外灘",
@@ -449,8 +711,8 @@ const DAYS = [
   {t:"10:50", a:"抵達上海浦東（PVG）", x:"飛機", p:"機票 台20000／1人"},
   {t:"12:00", a:"出關，地鐵 2 號線至「南京東路站」2 號口出站，隔壁即悅薈廣場", x:"地鐵 2 號線"},
   {t:"13:10", a:"飯店寄存行李", h:"麗呈璀際酒店", p:"兩晚 1700／2人"},
-  {t:"13:30–16:30", a:"新天地聖誕市集／李百蟹（九江路・外灘南京路店）", x:"地鐵 10 號線（往基隆路／航中路方向）"},
-  {t:"19:30–21:30", a:"洛克・外灘源平安夜狂歡／圓明園路步行街", x:"腳", p:"門票 80／2人"},
+  {t:"13:30–16:30", a:"新天地聖誕市集／李百蟹（九江路・外灘南京路店）", c:["xintiandi"], x:"地鐵 10 號線（往基隆路／航中路方向）"},
+  {t:"19:30–21:30", a:"洛克・外灘源平安夜狂歡／圓明園路步行街", c:["waitanyuan"], x:"腳", p:"門票 80／2人"},
   {t:"22:00", a:"散步返回飯店休息", h:"麗呈璀際酒店", p:"平均一晚 850／2人"},
  ],
  food:[
@@ -461,15 +723,15 @@ const DAYS = [
 {day:2, date:"12/25", wd:"五", stage:"sh1", tagline:"上海｜豫園城隍廟 ➔ 外灘海關亮燈夜",
  hotel:"麗呈璀際酒店",
  items:[
-  {t:"10:20–13:00", a:"搭車至豫園／城隍廟（也可在房休息）", x:"地鐵 10 號線，坐 1 站在「豫園站」下車（1 號口或 3 號口出站）", note:"前後可調動", p:"10／2人"},
+  {t:"10:20–13:00", a:"搭車至豫園／城隍廟（也可在房休息）", c:["yuyuan","chenghuangmiao"], x:"地鐵 10 號線，坐 1 站在「豫園站」下車（1 號口或 3 號口出站）", note:"前後可調動", p:"10／2人"},
   {t:"13:30–17:00", a:"開市客 Costco（上海浦東店）", x:"網約車", p:"60／2人"},
-  {t:"18:00", a:"外灘海關亮燈", x:"網約車", p:"60／2人", note:"一秒內同步亮起金黃色華燈"},
-  {t:"19:30–21:30", a:"洛克・外灘源／圓明園路步行街，或靈活調動改去「很久以前」羊肉串", x:"網約車", p:"60／2人", note:"太累可不走去；百年歐式建築街區掛滿瀑布般星星燈網，人工雪花機每逢整點飄雪，搭配巨型聖誕樹與復古旋轉木馬"},
-  {t:"21:00", a:"五角場下沉式廣場，欣賞巨型彩蛋 3D 燈光秀", x:"網約車", p:"60／2人"},
+  {t:"18:00", a:"外灘海關亮燈", c:["bund"], x:"網約車", p:"60／2人", note:"一秒內同步亮起金黃色華燈"},
+  {t:"19:30–21:30", a:"洛克・外灘源／圓明園路步行街，或靈活調動改去「很久以前」羊肉串", c:["waitanyuan"], x:"網約車", p:"60／2人", note:"太累可不走去；百年歐式建築街區掛滿瀑布般星星燈網，人工雪花機每逢整點飄雪，搭配巨型聖誕樹與復古旋轉木馬"},
+  {t:"21:00", a:"五角場下沉式廣場，欣賞巨型彩蛋 3D 燈光秀", c:["wujiaochang"], x:"網約車", p:"60／2人"},
   {t:"22:00", a:"散步返回飯店休息", h:"麗呈璀際酒店", p:"平均一晚 850／2人"},
  ],
  food:[
-  {n:"南翔饅頭店（豫園）", d:"南翔小籠包創始店，百年老字號，建議直上二、三樓內用環境更好。招牌：蟹粉鮮肉小籠包（必點）、巨型蟹黃灌湯包（用吸管吸湯汁）。", p:"人均 RMB60–100"},
+  {n:"南翔饅頭店（豫園）", c:["nanxiang"], d:"南翔小籠包創始店，百年老字號，建議直上二、三樓內用環境更好。招牌：蟹粉鮮肉小籠包（必點）、巨型蟹黃灌湯包（用吸管吸湯汁）。", p:"人均 RMB60–100"},
   {n:"開市客 Costco 熟食區", d:"必吃黑松露牛肉捲（外部熟食區現點現切，肉質多汁）；也可帶走大顆粒蟹黃拌麵等聯名冷凍食品。"},
   {n:"很久以前羊肉串（五角場合生匯 B2）", d:"全自動旋轉烤串店，氣氛熱鬧、服務媲美海底撈。招牌：呼倫貝爾羔羊肉串（必吃）、烤生蠔、烤麵包片。下午先用微信小程式線上取號，免得現場排隊兩小時。", p:"人均 RMB110–140"},
  ]},
@@ -480,10 +742,10 @@ const DAYS = [
   {t:"10:40", a:"人工售票處或自助機完成換票取証", p:"門票 700／2人", note:"越早進園，中央黃金排數越充足，越容易被派到神仙座位"},
   {t:"10:50–13:30", a:"園區小吃：排骨年糕、生煎包", p:"一份 30"},
   {t:"13:40", a:"提早 20 分鐘進場：主秀 14:00 準時開演"},
-  {t:"14:00–15:00", a:"核心表演：觀看《上海千古情》主秀", note:"黃金中排（第 8–15 排）：與舞台平視、看得清演員表情又不會被水幕潑濕，完美收錄全景 3D 燈光特效"},
+  {t:"14:00–15:00", a:"核心表演：觀看《上海千古情》主秀", c:["qianguqing"], note:"黃金中排（第 8–15 排）：與舞台平視、看得清演員表情又不會被水幕潑濕，完美收錄全景 3D 燈光特效"},
   {t:"15:30–17:30", a:"體驗《大地震》沉浸式劇場"},
   {t:"17:30–18:00", a:"玩「戰上海」"},
-  {t:"18:00–18:45", a:"搭網約車直奔五角場商圈（50 分鐘）", x:"網約車", p:"100／2人"},
+  {t:"18:00–18:45", a:"搭網約車直奔五角場商圈（50 分鐘）", c:["wujiaochang"], x:"網約車", p:"100／2人"},
   {t:"18:45–20:30", a:"逛合生匯 B2 小吃街：胖阿姨鍋貼、阿嬤手作奶茶", p:"200／2人"},
   {t:"20:30–22:15", a:"21:50 巨型彩蛋 3D 燈光秀（下沉式廣場）", note:"徐家匯書院和天主教堂廣場佈滿美式復古聖誕樹與市集"},
   {t:"22:15–22:45", a:"五角場站搭地鐵 10 號線，直達「南京東路站」回飯店", x:"地鐵 10 號線", h:"麗呈璀際酒店", p:"60／2人"},
@@ -498,8 +760,8 @@ const DAYS = [
  items:[
   {t:"10:00", a:"退房，打車 15 分鐘前往上海高鐵站", x:"網約車"},
   {t:"10:30–10:55", a:"搭乘高鐵，上海站 ➔ 蘇州站（車程僅 25 分鐘，若沒買到票則改打車）", x:"高鐵 ／ 網約車"},
-  {t:"11:15", a:"抵達蘇州，行李寄放飯店，中午在平江路歷史街區用餐", h:"拙遇酒店", p:"900／2晚／2人", note:"啞巴生煎"},
-  {t:"13:30–16:30", a:"拙政園，欣賞正宗蘇州園林疊石", x:"網約車", p:"門票 200／2人"},
+  {t:"11:15", a:"抵達蘇州，行李寄放飯店，中午在平江路歷史街區用餐", c:["pingjianglu"], h:"拙遇酒店", p:"900／2晚／2人", note:"啞巴生煎"},
+  {t:"13:30–16:30", a:"拙政園，欣賞正宗蘇州園林疊石", c:["zhuozhengyuan"], x:"網約車", p:"門票 200／2人"},
   {t:"18:00–21:00", a:"齐門馬頭姑蘇夜畫遊船（現場買票，第二排絕佳拍攝點，週一公休，沒有的話改去盤門）", x:"網約車", p:"門票 300／2人（淡季 200／2人）"},
   {t:"21:30", a:"返回平江路附近飯店休息", h:"拙遇酒店", p:"平均一晚 450／2人"},
  ],
@@ -512,13 +774,13 @@ const DAYS = [
  hotel:"拙遇酒店",
  items:[
   {t:"10:30", a:"出門", h:"拙遇酒店"},
-  {t:"11:00–14:00", a:"虎丘", x:"網約車", note:"回程可順遊平江路"},
-  {t:"14:30–17:00", a:"留園", x:"網約車", p:"門票 100／2人", note:"鄰近觀前街"},
-  {t:"17:30–21:00", a:"高光時刻：七里山塘夜景 —— 紅燈籠沿小橋流水逐一亮起，穿梭槳聲燈影中；晚餐在老街享用松鶴樓的松鼠桂魚", x:"網約車"},
+  {t:"11:00–14:00", a:"虎丘", c:["huqiu"], x:"網約車", note:"回程可順遊平江路"},
+  {t:"14:30–17:00", a:"留園", c:["liuyuan"], x:"網約車", p:"門票 100／2人", note:"鄰近觀前街"},
+  {t:"17:30–21:00", a:"高光時刻：七里山塘夜景 —— 紅燈籠沿小橋流水逐一亮起，穿梭槳聲燈影中；晚餐在老街享用松鶴樓的松鼠桂魚", c:["shantang","songhelou"], x:"網約車"},
   {t:"21:30", a:"打車返回平江路飯店", x:"網約車", h:"拙遇酒店", p:"平均一晚 450／2人"},
  ],
  food:[
-  {n:"松鶴樓（山塘店）", d:"超過兩百年歷史的蘇幫菜鼻祖，臨河看燈籠吃飯極具江南詩意。招牌：松鼠桂魚（必點，外脆裡嫩、酸甜開胃）、清炒河蝦仁、響油鱔糊。", p:"人均 RMB150–220"},
+  {n:"松鶴樓（山塘店）", c:["songhelou"], d:"超過兩百年歷史的蘇幫菜鼻祖，臨河看燈籠吃飯極具江南詩意。招牌：松鼠桂魚（必點，外脆裡嫩、酸甜開胃）、清炒河蝦仁、響油鱔糊。", p:"人均 RMB150–220"},
   {n:"鑫震源・蘇式生煎（山塘街小吃備案）", d:"招牌大蝦生煎（內有一整隻大蝦）、紙皮燒賣。", p:"人均 RMB30"},
   {n:"山塘街 ／ 觀前街小吃地圖", d:"桂花糖芋艿、糖藕、現烤梅花糕、烤乳扇捲餅、買買提羊肉串；觀前街則有玄妙觀老字號糕點、黃天源蘇式糕團、采芝齋桂花糖與五香豆、大富貴餛飩，以及晚園蘇式火鍋等網紅店。"},
  ]},
@@ -526,10 +788,10 @@ const DAYS = [
 {day:6, date:"12/29", wd:"二", stage:"hz", tagline:"蘇州 ➔ 湖州太湖龍之夢｜順路直達 ➔ 初探古鎮水舞",
  hotel:"太湖龍之夢古鎮大酒店",
  items:[
-  {t:"10:00", a:"蘇州退房，網約車直跨湖州（距離 75 公里，高速僅需 1.5 小時）", x:"網約車", p:"350／2人"},
+  {t:"10:00", a:"蘇州退房，網約車直跨湖州（距離 75 公里，高速僅需 1.5 小時）", c:["huzhou"], x:"網約車", p:"350／2人"},
   {t:"11:40", a:"抵達太湖古鎮大酒店辦理入住", h:"太湖龍之夢古鎮大酒店", p:"3000／3晚／2人", note:"記得跟櫃台加價換「煙火房」，12/31 那晚加價約 200／1晚"},
   {t:"14:00–17:00", a:"冰雪世界：室內滑雪、玩冰雕、冰上碰碰車", x:"網約車", p:"滑雪 400／2人"},
-  {t:"18:00", a:"太湖古鎮享用丁蓮芳千張包子、周生記餛飩", x:"網約車"},
+  {t:"18:00", a:"太湖古鎮享用丁蓮芳千張包子、周生記餛飩", c:["longzhimeng"], x:"網約車"},
   {t:"19:30–20:30", a:"大型水上燈光水舞秀與打鐵花"},
   {t:"21:00", a:"返回太湖古鎮大酒店", x:"腳", h:"太湖龍之夢古鎮大酒店", p:"平均一晚 1000／2人"},
  ],
@@ -557,12 +819,12 @@ const DAYS = [
 {day:9, date:"01/01", wd:"五・元旦", stage:"nx", tagline:"湖州 ➔ 南潯古鎮｜尋訪巨富豪宅 ➔ 最具生活氣息的水鄉",
  hotel:"烏鎮望津里精品酒店",
  items:[
-  {t:"11:00", a:"元旦睡飽退房，龍之夢打車直奔南潯古鎮北門（車程 40 分鐘）", x:"網約車", p:"150／2人"},
-  {t:"11:15–16:30", a:"劉氏梯號（紅房子）與張石銘舊宅", x:"腳", p:"門票 350／2人", note:"大行李箱可免費寄存於南潯古鎮遊客中心；中午吃在地雙交麵，下午漫步百間樓"},
+  {t:"11:00", a:"元旦睡飽退房，龍之夢打車直奔南潯古鎮北門（車程 40 分鐘）", c:["nanxun"], x:"網約車", p:"150／2人"},
+  {t:"11:15–16:30", a:"劉氏梯號（紅房子）與張石銘舊宅", c:["liushi","zhangshiming","baijianlou"], x:"腳", p:"門票 350／2人", note:"大行李箱可免費寄存於南潯古鎮遊客中心；中午吃在地雙交麵，下午漫步百間樓"},
   {t:"16:30", a:"回到南潯大門口提領行李", x:"腳"},
   {t:"16:45–17:30", a:"網約車前往烏鎮西柵景區（45 分鐘車程）", x:"網約車", p:"100／2人"},
   {t:"17:45", a:"抵達西柵遊客中心辦理入住（預約早茶客）", h:"烏鎮望津里精品酒店", p:"2200／2晚／2人"},
-  {t:"18:30–21:00", a:"元旦夜遊烏鎮西柵：一進園剛好趕上兩岸華燈初上", x:"腳", note:"昭明弄堂享用熱騰騰的湖羊肉暖鍋，隨後搭乘雙人夜間搖櫓船"},
+  {t:"18:30–21:00", a:"元旦夜遊烏鎮西柵：一進園剛好趕上兩岸華燈初上", c:["wuzhen"], x:"腳", note:"昭明弄堂享用熱騰騰的湖羊肉暖鍋，隨後搭乘雙人夜間搖櫓船"},
   {t:"21:15", a:"回西柵景區內民宿房間", x:"腳", h:"烏鎮望津里精品酒店", p:"平均一晚 1100／2人"},
  ],
  food:[
@@ -572,9 +834,9 @@ const DAYS = [
 {day:10, date:"01/02", wd:"六", stage:"nx", tagline:"烏鎮西柵｜元旦市集與老街暖鍋",
  hotel:"烏鎮望津里精品酒店",
  items:[
-  {t:"05:30", a:"早茶客（湖邊吃飯）", x:"腳", h:"烏鎮望津里精品酒店"},
+  {t:"05:30", a:"早茶客（湖邊吃飯）", c:["chashi"], x:"腳", h:"烏鎮望津里精品酒店"},
   {t:"10:30–13:00", a:"換上租借服裝", x:"腳"},
-  {t:"13:30–17:00", a:"逛草木本色染坊、打卡木心美術館；下午到「冬季水上茶市」看年貨集市", x:"腳", p:"門票 80／2人"},
+  {t:"13:30–17:00", a:"逛草木本色染坊、打卡木心美術館；下午到「冬季水上茶市」看年貨集市", c:["ranfang","muxin"], x:"腳", p:"門票 80／2人"},
   {t:"18:00–21:00", a:"昭明弄堂再吃湖羊肉暖鍋，雙人夜間搖櫓船（訂到才有）", x:"腳"},
   {t:"21:30", a:"回民宿休息", x:"腳", h:"烏鎮望津里精品酒店", p:"平均一晚 1100／2人"},
  ],
@@ -586,7 +848,7 @@ const DAYS = [
  hotel:"橘子水晶上海外灘豫園酒店",
  items:[
   {t:"10:00", a:"烏鎮退房，行李交給民宿前台，會用專船免費送到景區出口行李房", x:"腳", h:"烏鎮望津里精品酒店"},
-  {t:"11:00–16:30", a:"烏鎮水鄉午後慵懶：老街悠閒下午茶、水上茶市喝茶聽評彈、木心美術館、老茶館", x:"腳", note:"在木心美術館消磨無人打擾的元旦連假收假午後"},
+  {t:"11:00–16:30", a:"烏鎮水鄉午後慵懶：老街悠閒下午茶、水上茶市喝茶聽評彈、木心美術館、老茶館", c:["muxin"], x:"腳", note:"在木心美術館消磨無人打擾的元旦連假收假午後"},
   {t:"16:30–17:30", a:"提早享用冬日晚餐：西柵紅燒羊肉麵或沿河砂鍋", x:"腳"},
   {t:"17:40", a:"搭景區電瓶車至出口行李房提領大行李箱", x:"腳"},
   {t:"18:00", a:"準時撤離烏鎮，景區門口網約車直奔桐鄉高鐵站", x:"網約車", note:"烏鎮打車至桐鄉站 35 分鐘＋高鐵 40 分鐘"},
@@ -605,7 +867,7 @@ const DAYS = [
   {t:"10:30", a:"飯店睡飽出門", h:"橘子水晶上海外灘豫園酒店"},
   {t:"11:00", a:"海底撈大排檔（打浦路店）", x:"網約車"},
   {t:"13:00–17:00", a:"豫園老街逛街消食（注意：出去後再次進入需另外購票）", x:"腳"},
-  {t:"17:30–21:00", a:"高光時刻：豫園元旦燈會正式亮燈 —— 萬盞神獸燈組同時點亮！", x:"腳", note:"兩人在九曲橋上拍出宛如《大魚海棠》的絕美古風神話大片"},
+  {t:"17:30–21:00", a:"高光時刻：豫園元旦燈會正式亮燈 —— 萬盞神獸燈組同時點亮！", c:["denghui"], x:"腳", note:"兩人在九曲橋上拍出宛如《大魚海棠》的絕美古風神話大片"},
   {t:"21:30", a:"走回豫園飯店", x:"腳", h:"橘子水晶上海外灘豫園酒店", p:"平均一晚 900／2人"},
  ],
  food:[
@@ -616,7 +878,7 @@ const DAYS = [
  hotel:"橘子水晶上海外灘豫園酒店",
  items:[
   {t:"10:00", a:"退房，寄放行李", x:"腳", h:"橘子水晶上海外灘豫園酒店"},
-  {t:"10:30–12:30", a:"豫園城隍廟", x:"腳"},
+  {t:"10:30–12:30", a:"豫園城隍廟", c:["chenghuangmiao"], x:"腳"},
   {t:"15:00", a:"回飯店拿行李", x:"腳"},
   {t:"15:15", a:"打車前往上海浦東機場 PVG（預留收假塞車時間）", x:"網約車"},
   {t:"20:10–22:10", a:"搭機返台", x:"飛機"},
@@ -823,17 +1085,21 @@ Object.keys(STAGE_META).forEach(key=>{
     card.id = "day"+d.day;
 
     const itemsHtml = d.items.map(it=>{
+      const used = new Set();
+      const act = cultureWrap(it.a, it.c, used);
+      const note = it.note ? cultureWrap(it.note, it.c, used) : "";
       const chips = [];
       if(it.x) chips.push(`<span class="chip trans">${it.x}</span>`);
       if(it.p) chips.push(`<span class="chip price mono">${it.p}</span>`);
       if(it.h) chips.push(`<span class="chip trans">${BED_ICON}${it.h}</span>`);
+      const extra = cultureChips(it.c, used);
       return `<div class="item">
         <div class="time mono">${it.t}</div>
         <div class="icon">${iconOf(it.x)}</div>
         <div class="body">
-          <div class="act">${it.a}</div>
-          ${it.note ? `<div class="note">${it.note}</div>` : ""}
-          ${chips.length ? `<div class="chips">${chips.join("")}</div>` : ""}
+          <div class="act">${act}</div>
+          ${note ? `<div class="note">${note}</div>` : ""}
+          ${(chips.length || extra) ? `<div class="chips">${chips.join("")}${extra}</div>` : ""}
         </div>
       </div>`;
     }).join("");
@@ -841,7 +1107,12 @@ Object.keys(STAGE_META).forEach(key=>{
     const foodHtml = d.food ? `
       <div class="food">
         <div class="food-h">${FOOD_ICON}在地美食</div>
-        ${d.food.map(f=>`<div class="food-item"><span class="fn">${f.n}</span>${f.p?`<span class="fp">${f.p}</span>`:""}${f.d?`<div class="fd">${f.d}</div>`:""}</div>`).join("")}
+        ${d.food.map(f=>{
+          const u = new Set();
+          const fn = cultureWrap(f.n, f.c, u);
+          const extra = cultureChips(f.c, u);
+          return `<div class="food-item"><span class="fn">${fn}</span>${f.p?`<span class="fp">${f.p}</span>`:""}${extra?` ${extra}`:""}${f.d?`<div class="fd">${f.d}</div>`:""}</div>`;
+        }).join("")}
       </div>` : "";
 
     card.innerHTML = `
@@ -874,6 +1145,60 @@ HOTELS.forEach(h=>{
   c.className = "hcard";
   c.innerHTML = `<div class="harea">${h.area}</div><h4>${h.name}</h4><div class="hdate">${h.dates}</div><div class="hprice mono">${h.price}</div>`;
   hotelsEl.appendChild(c);
+});
+
+/* ---------------- Culture appendix (print) ---------------- */
+document.getElementById("culture-appendix-list").innerHTML =
+  Object.keys(CULTURE).map(k=>{
+    const c = CULTURE[k];
+    return `<div class="ca-item">
+      <h3>${c.n} <span class="ca-era">${c.e || ""}</span></h3>
+      ${(c.p||[]).map(t=>`<p>${t}</p>`).join("")}
+      ${(c.f&&c.f.length)?`<ul>${c.f.map(t=>`<li>${t}</li>`).join("")}</ul>`:""}
+    </div>`;
+  }).join("");
+
+/* ---------------- Culture modal ---------------- */
+const cmodal = document.getElementById("cmodal");
+const cEra = document.getElementById("cmodal-era");
+const cTitle = document.getElementById("cmodal-title");
+const cBody = document.getElementById("cmodal-body");
+const cFacts = document.getElementById("cmodal-facts");
+const cFactsList = document.getElementById("cmodal-facts-list");
+let lastFocus = null;
+
+function openCulture(key){
+  const c = CULTURE[key];
+  if(!c) return;
+  lastFocus = document.activeElement;
+  cEra.textContent = c.e || "";
+  cEra.style.display = c.e ? "inline-block" : "none";
+  cTitle.textContent = c.n;
+  cBody.innerHTML = (c.p || []).map(t=>`<p>${t}</p>`).join("");
+  if(c.f && c.f.length){
+    cFactsList.innerHTML = c.f.map(t=>`<li>${t}</li>`).join("");
+    cFacts.style.display = "block";
+  } else {
+    cFacts.style.display = "none";
+  }
+  cmodal.classList.add("open");
+  document.body.style.overflow = "hidden";
+  cmodal.querySelector(".cmodal-card").scrollTop = 0;
+  document.getElementById("cmodal-close").focus();
+}
+function closeCulture(){
+  cmodal.classList.remove("open");
+  document.body.style.overflow = "";
+  if(lastFocus && lastFocus.focus) lastFocus.focus();
+}
+
+document.addEventListener("click", e=>{
+  const trigger = e.target.closest("[data-c]");
+  if(trigger){ openCulture(trigger.getAttribute("data-c")); return; }
+  if(e.target.closest("[data-close]") || e.target.closest("#cmodal-close")) closeCulture();
+});
+document.addEventListener("keydown", e=>{
+  if(e.key === "Escape" && cmodal.classList.contains("open")) closeCulture();
 });
 
 /* ---------------- Back to top ---------------- */
